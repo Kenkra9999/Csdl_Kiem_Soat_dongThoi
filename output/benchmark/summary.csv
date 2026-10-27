@@ -1,0 +1,7 @@
+﻿round,strategy,workers,requests,accepted,replayed,rejected,exhausted,errors,requests_retried,total_retries,elapsed_ms,throughput_requests_s,latency_mean_ms,latency_p50_ms,latency_p95_ms,latency_max_ms,invariants_passed
+1,row_lock,12,60,4,2,54,0,0,0,0,577.374,103.919,100.547,91.267,197.51,234.479,True
+1,serializable,12,60,7,3,50,0,0,12,17,954.184,62.881,126.342,90.339,298.295,463.367,True
+2,serializable,12,60,4,2,54,0,0,5,5,559.837,107.174,100.529,86.987,190.67,262.73,True
+2,row_lock,12,60,4,2,54,0,0,0,0,598.675,100.221,112.884,107.951,154.823,217.038,True
+3,row_lock,12,60,3,2,55,0,0,0,0,624.623,96.058,106.092,100.553,159.757,184.151,True
+3,serializable,12,60,7,3,50,0,0,12,17,657.731,91.223,105.331,76.813,256.966,332.667,True

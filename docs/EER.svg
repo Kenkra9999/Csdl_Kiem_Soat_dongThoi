@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="730" height="445" preserveAspectRatio="xMinYMin meet" viewBox="0 0 730 445" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="730" height="445"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-445)" style="clip-path: url(#clip)">
+		<g transform="">
+			<rect x="0" y="337" width="155" height="51" style="stroke: rgb(8%,20%,27%); stroke-linecap: butt; stroke-width: 0.7; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<rect x="0" y="366" width="155" height="22" style="stroke: rgb(8%,20%,27%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,20%,27%); fill-rule: evenodd;"/>
+			<text x="8" y="373" style="font-family: Body-Bold; font-size: 9px;fill: rgb(100%,100%,100%); stroke:none;" transform="translate(0,746) scale(1,-1)">USERS</text>
+			<text x="7" y="352" style="font-family: Body; font-size: 8px;fill: rgb(8%,20%,27%); stroke:none;" transform="translate(0,704) scale(1,-1)">PK id; UK email</text>
+			<text x="7" y="340" style="font-family: Body; font-size: 8px;fill: rgb(8%,20%,27%); stroke:none;" transform="translate(0,680) scale(1,-1)">full_name</text>
+			<rect x="285" y="325" width="170" height="63" style="stroke: rgb(8%,20%,27%); stroke-linecap: butt; stroke-width: 0.7; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<rect x="285" y="366" width="170" height="22" style="stroke: rgb(8%,20%,27%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,20%,27%); fill-rule: evenodd;"/>
+			<text x="293" y="373" style="font-family: Body-Bold; font-size: 9px;fill: rgb(100%,100%,100%); stroke:none;" transform="translate(0,746) scale(1,-1)">ASSETS</text>
+			<text x="292" y="352" style="font-family: Body; font-size: 8px;fill: rgb(8%,20%,27%); stroke:none;" transform="translate(0,704) scale(1,-1)">PK id; FK seller_id</text>
+			<text x="292" y="340" style="font-family: Body; font-size: 8px;fill: rgb(8%,20%,27%); stroke:none;" transform="translate(0,680) scale(1,-1)">FK category_id; kind</text>
+			<text x="292" y="328" style="font-family: Body; font-size: 8px;fill: rgb(8%,20%,27%); stroke:none;" transform="translate(0,656) scale(1,-1)">title</text>
+			<rect x="575" y="337" width="155" height="51" style="stroke: rgb(8%,20%,27%); stroke-linecap: butt; stroke-width: 0.7; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<rect x="575" y="366" width="155" height="22" style="stroke: rgb(8%,20%,27%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,20%,27%); fill-rule: evenodd;"/>
+			<text x="583" y="373" style="font-family: Body-Bold; font-size: 9px;fill: rgb(100%,100%,100%); stroke:none;" transform="translate(0,746) scale(1,-1)">CATEGORIES</text>
+			<text x="582" y="352" style="font-family: Body; font-size: 8px;fill: rgb(8%,20%,27%); stroke:none;" transform="translate(0,704) scale(1,-1)">PK id; FK parent_id</text>
+			<text x="582" y="340" style="font-family: Body; font-size: 8px;fill: rgb(8%,20%,27%); stroke:none;" transform="translate(0,680) scale(1,-1)">name; cây cha - con</text>
+			<rect x="200" y="211" width="155" height="51" style="stroke: rgb(8%,20%,27%); stroke-linecap: butt; stroke-width: 0.7; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<rect x="200" y="240" width="155" height="22" style="stroke: rgb(8%,20%,27%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,20%,27%); fill-rule: evenodd;"/>
+			<text x="208" y="247" style="font-family: Body-Bold; font-size: 9px;fill: rgb(100%,100%,100%); stroke:none;" transform="translate(0,494) scale(1,-1)">ARTWORKS</text>
+			<text x="207" y="226" style="font-family: Body; font-size: 8px;fill: rgb(8%,20%,27%); stroke:none;" transform="translate(0,452) scale(1,-1)">PK/FK asset_id</text>
+			<text x="207" y="214" style="font-family: Body; font-size: 8px;fill: rgb(8%,20%,27%); stroke:none;" transform="translate(0,428) scale(1,-1)">artist; material; year</text>
+			<rect x="385" y="211" width="155" height="51" style="stroke: rgb(8%,20%,27%); stroke-linecap: butt; stroke-width: 0.7; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<rect x="385" y="240" width="155" height="22" style="stroke: rgb(8%,20%,27%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,20%,27%); fill-rule: evenodd;"/>
+			<text x="393" y="247" style="font-family: Body-Bold; font-size: 9px;fill: rgb(100%,100%,100%); stroke:none;" transform="translate(0,494) scale(1,-1)">COLLECTIBLES</text>
+			<text x="392" y="226" style="font-family: Body; font-size: 8px;fill: rgb(8%,20%,27%); stroke:none;" transform="translate(0,452) scale(1,-1)">PK/FK asset_id</text>
+			<text x="392" y="214" style="font-family: Body; font-size: 8px;fill: rgb(8%,20%,27%); stroke:none;" transform="translate(0,428) scale(1,-1)">origin; rarity; year</text>
+			<rect x="575" y="211" width="155" height="51" style="stroke: rgb(8%,20%,27%); stroke-linecap: butt; stroke-width: 0.7; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<rect x="575" y="240" width="155" height="22" style="stroke: rgb(8%,20%,27%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,20%,27%); fill-rule: evenodd;"/>
+			<text x="583" y="247" style="font-family: Body-Bold; font-size: 9px;fill: rgb(100%,100%,100%); stroke:none;" transform="translate(0,494) scale(1,-1)">ELECTRONICS</text>
+			<text x="582" y="226" style="font-family: Body; font-size: 8px;fill: rgb(8%,20%,27%); stroke:none;" transform="translate(0,452) scale(1,-1)">PK/FK asset_id</text>
+			<text x="582" y="214" style="font-family: Body; font-size: 8px;fill: rgb(8%,20%,27%); stroke:none;" transform="translate(0,428) scale(1,-1)">brand; model; serial</text>
+			<rect x="0" y="153" width="174" height="75" style="stroke: rgb(8%,20%,27%); stroke-linecap: butt; stroke-width: 0.7; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<rect x="0" y="206" width="174" height="22" style="stroke: rgb(8%,20%,27%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,20%,27%); fill-rule: evenodd;"/>
+			<text x="8" y="213" style="font-family: Body-Bold; font-size: 9px;fill: rgb(100%,100%,100%); stroke:none;" transform="translate(0,426) scale(1,-1)">AUCTIONS</text>
+			<text x="7" y="192" style="font-family: Body; font-size: 8px;fill: rgb(8%,20%,27%); stroke:none;" transform="translate(0,384) scale(1,-1)">PK id; FK asset_id</text>
+			<text x="7" y="180" style="font-family: Body; font-size: 8px;fill: rgb(8%,20%,27%); stroke:none;" transform="translate(0,360) scale(1,-1)">start_price; bid_step</text>
+			<text x="7" y="168" style="font-family: Body; font-size: 8px;fill: rgb(8%,20%,27%); stroke:none;" transform="translate(0,336) scale(1,-1)">opens_at; closes_at; status</text>
+			<text x="7" y="156" style="font-family: Body; font-size: 8px;fill: rgb(8%,20%,27%); stroke:none;" transform="translate(0,312) scale(1,-1)">current_price; leading_bid_id</text>
+			<rect x="0" y="23" width="174" height="51" style="stroke: rgb(8%,20%,27%); stroke-linecap: butt; stroke-width: 0.7; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<rect x="0" y="52" width="174" height="22" style="stroke: rgb(8%,20%,27%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,20%,27%); fill-rule: evenodd;"/>
+			<text x="8" y="59" style="font-family: Body-Bold; font-size: 9px;fill: rgb(100%,100%,100%); stroke:none;" transform="translate(0,118) scale(1,-1)">REGISTRATIONS</text>
+			<text x="7" y="38" style="font-family: Body; font-size: 8px;fill: rgb(8%,20%,27%); stroke:none;" transform="translate(0,76) scale(1,-1)">PK/FK auction_id, user_id</text>
+			<text x="7" y="26" style="font-family: Body; font-size: 8px;fill: rgb(8%,20%,27%); stroke:none;" transform="translate(0,52) scale(1,-1)">status; registered_at</text>
+			<rect x="235" y="23" width="210" height="63" style="stroke: rgb(8%,20%,27%); stroke-linecap: butt; stroke-width: 0.7; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<rect x="235" y="64" width="210" height="22" style="stroke: rgb(8%,20%,27%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,20%,27%); fill-rule: evenodd;"/>
+			<text x="243" y="71" style="font-family: Body-Bold; font-size: 9px;fill: rgb(100%,100%,100%); stroke:none;" transform="translate(0,142) scale(1,-1)">BIDS</text>
+			<text x="242" y="50" style="font-family: Body; font-size: 8px;fill: rgb(8%,20%,27%); stroke:none;" transform="translate(0,100) scale(1,-1)">PK id; UK request_id</text>
+			<text x="242" y="38" style="font-family: Body; font-size: 8px;fill: rgb(8%,20%,27%); stroke:none;" transform="translate(0,76) scale(1,-1)">FK auction_id, bidder_id</text>
+			<text x="242" y="26" style="font-family: Body; font-size: 8px;fill: rgb(8%,20%,27%); stroke:none;" transform="translate(0,52) scale(1,-1)">amount; accepted_at</text>
+			<rect x="500" y="77" width="230" height="63" style="stroke: rgb(8%,20%,27%); stroke-linecap: butt; stroke-width: 0.7; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<rect x="500" y="118" width="230" height="22" style="stroke: rgb(8%,20%,27%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,20%,27%); fill-rule: evenodd;"/>
+			<text x="508" y="125" style="font-family: Body-Bold; font-size: 9px;fill: rgb(100%,100%,100%); stroke:none;" transform="translate(0,250) scale(1,-1)">RESULTS</text>
+			<text x="507" y="104" style="font-family: Body; font-size: 8px;fill: rgb(8%,20%,27%); stroke:none;" transform="translate(0,208) scale(1,-1)">PK/FK auction_id</text>
+			<text x="507" y="92" style="font-family: Body; font-size: 8px;fill: rgb(8%,20%,27%); stroke:none;" transform="translate(0,184) scale(1,-1)">FK winning_bid_id (có thể NULL)</text>
+			<text x="507" y="80" style="font-family: Body; font-size: 8px;fill: rgb(8%,20%,27%); stroke:none;" transform="translate(0,160) scale(1,-1)">closed_at</text>
+			<rect x="500" y="0" width="230" height="51" style="stroke: rgb(8%,20%,27%); stroke-linecap: butt; stroke-width: 0.7; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<rect x="500" y="29" width="230" height="22" style="stroke: rgb(8%,20%,27%); stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,20%,27%); fill-rule: evenodd;"/>
+			<text x="508" y="36" style="font-family: Body-Bold; font-size: 9px;fill: rgb(100%,100%,100%); stroke:none;" transform="translate(0,72) scale(1,-1)">AUDIT_LOG</text>
+			<text x="507" y="15" style="font-family: Body; font-size: 8px;fill: rgb(8%,20%,27%); stroke:none;" transform="translate(0,30) scale(1,-1)">PK id; FK auction_id, actor_id</text>
+			<text x="507" y="3" style="font-family: Body; font-size: 8px;fill: rgb(8%,20%,27%); stroke:none;" transform="translate(0,6) scale(1,-1)">action; details; transaction_id</text>
+			<path d="M 155,362.5 L 285,356.5 Z" style="stroke: rgb(3%,49%,51%); stroke-linecap: butt; stroke-width: 0.9;"/>
+			<text x="223.0" y="362.5" style="font-family: Body; font-size: 7px;fill: rgb(3%,49%,51%); stroke:none;" transform="translate(0,725) scale(1,-1)">1 : N (người bán)</text>
+			<path d="M 575,365 L 455,365 Z" style="stroke: rgb(3%,49%,51%); stroke-linecap: butt; stroke-width: 0.9;"/>
+			<text x="474" y="371" style="font-family: Body; font-size: 7px;fill: rgb(3%,49%,51%); stroke:none;" transform="translate(0,742) scale(1,-1)">1 : N</text>
+			<path d="M 370,325 L 277.5,262 Z" style="stroke: rgb(3%,49%,51%); stroke-linecap: butt; stroke-width: 0.9;"/>
+			<text x="326.75" y="296.5" style="font-family: Body; font-size: 7px;fill: rgb(3%,49%,51%); stroke:none;" transform="translate(0,593) scale(1,-1)">1 : 0..1</text>
+			<path d="M 370,325 L 462.5,262 Z" style="stroke: rgb(3%,49%,51%); stroke-linecap: butt; stroke-width: 0.9;"/>
+			<text x="419.25" y="296.5" style="font-family: Body; font-size: 7px;fill: rgb(3%,49%,51%); stroke:none;" transform="translate(0,593) scale(1,-1)">1 : 0..1</text>
+			<path d="M 370,325 L 652.5,262 Z" style="stroke: rgb(3%,49%,51%); stroke-linecap: butt; stroke-width: 0.9;"/>
+			<text x="514.25" y="296.5" style="font-family: Body; font-size: 7px;fill: rgb(3%,49%,51%); stroke:none;" transform="translate(0,593) scale(1,-1)">1 : 0..1</text>
+			<text x="480" y="307" style="font-family: Body-Bold; font-size: 8px;fill: rgb(3%,49%,51%); stroke:none;" transform="translate(0,614) scale(1,-1)">ISA: TOTAL + DISJOINT</text>
+			<path d="M 285,343 L 185,343 Z" style="stroke: rgb(3%,49%,51%); stroke-linecap: butt; stroke-width: 0.9;"/>
+			<path d="M 185,343 L 185,210 Z" style="stroke: rgb(3%,49%,51%); stroke-linecap: butt; stroke-width: 0.9;"/>
+			<path d="M 185,210 L 174,210 Z" style="stroke: rgb(3%,49%,51%); stroke-linecap: butt; stroke-width: 0.9;"/>
+			<text x="187" y="274" style="font-family: Body; font-size: 7px;fill: rgb(3%,49%,51%); stroke:none;" transform="translate(0,548) scale(1,-1)">1 : N</text>
+			<path d="M 87,153 L 87,74 Z" style="stroke: rgb(3%,49%,51%); stroke-linecap: butt; stroke-width: 0.9;"/>
+			<text x="90.0" y="116.5" style="font-family: Body; font-size: 7px;fill: rgb(3%,49%,51%); stroke:none;" transform="translate(0,233) scale(1,-1)">1 : N</text>
+			<path d="M 174,48.5 L 235,54.5 Z" style="stroke: rgb(3%,49%,51%); stroke-linecap: butt; stroke-width: 0.9;"/>
+			<text x="207.5" y="54.5" style="font-family: Body; font-size: 7px;fill: rgb(3%,49%,51%); stroke:none;" transform="translate(0,109) scale(1,-1)">1 : N</text>
+			<path d="M 445,54.5 L 500,108.5 Z" style="stroke: rgb(3%,49%,51%); stroke-linecap: butt; stroke-width: 0.9;"/>
+			<text x="475.5" y="84.5" style="font-family: Body; font-size: 7px;fill: rgb(3%,49%,51%); stroke:none;" transform="translate(0,169) scale(1,-1)">0..1 : 0..1</text>
+			<text x="0" y="427" style="font-family: Body-Bold; font-size: 13px;fill: rgb(8%,20%,27%); stroke:none;" transform="translate(0,854) scale(1,-1)">EER / LƯỢC ĐỒ QUAN HỆ - ĐỀ TÀI 19</text>
+			<text x="0" y="409" style="font-family: Body; font-size: 9px;fill: rgb(32%,38%,44%); stroke:none;" transform="translate(0,818) scale(1,-1)">PK: khóa chính  |  UK: duy nhất  |  FK: khóa ngoại  |  N: nhiều</text>
+		</g>
+	</g>
+</svg>

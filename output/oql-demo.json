@@ -1,0 +1,24 @@
+{
+  "engine": "Python simulation of object queries; not an ODMG OQL runtime",
+  "artwork_auction_ids": [
+    1
+  ],
+  "auction_1_history": [
+    {
+      "bid": 1,
+      "bidder": "An",
+      "amount": "100"
+    },
+    {
+      "bid": 2,
+      "bidder": "Bình",
+      "amount": "120"
+    }
+  ],
+  "auction_1_leader": {
+    "name": "Bình",
+    "amount": "120"
+  },
+  "empty_auction_leader": null,
+  "user_2_roles": "Người trả giá ở phiên 1, người bán ở phiên 2"
+}

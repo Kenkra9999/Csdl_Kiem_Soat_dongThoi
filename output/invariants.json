@@ -1,0 +1,42 @@
+[
+  {
+    "check_name": "cache_matches_history",
+    "passed": true,
+    "details": "current_price = MAX(lượt đã chấp nhận), NULL khi rỗng; vi phạm=0"
+  },
+  {
+    "check_name": "leader_matches_history",
+    "passed": true,
+    "details": "leading_bid_id thuộc phiên và là lượt có giá cao nhất; vi phạm=0"
+  },
+  {
+    "check_name": "one_result_per_auction",
+    "passed": true,
+    "details": "PK results.auction_id; tối đa một kết quả/phiên; vi phạm=0"
+  },
+  {
+    "check_name": "closed_result_matches_winner",
+    "passed": true,
+    "details": "CLOSED có đúng kết quả, OPEN chưa có kết quả; thắng bằng leader; vi phạm=0"
+  },
+  {
+    "check_name": "unique_request_ids",
+    "passed": true,
+    "details": "UNIQUE bids.request_id, chống lượt trùng cả liên phiên; vi phạm=0"
+  },
+  {
+    "check_name": "valid_bid_rules",
+    "passed": true,
+    "details": "Giá đúng lưới, đúng thời gian và tăng nghiêm ngặt theo thứ tự ID; vi phạm=0"
+  },
+  {
+    "check_name": "asset_subtypes_total_disjoint",
+    "passed": true,
+    "details": "Mỗi tài sản thuộc đúng một lớp con tương ứng kind; vi phạm=0"
+  },
+  {
+    "check_name": "audit_atomicity",
+    "passed": true,
+    "details": "Mỗi bid/result có đúng một sự kiện audit cùng dữ liệu; vi phạm=0"
+  }
+]

@@ -1,0 +1,132 @@
+[
+  {
+    "step": "Tạo phiên mới",
+    "auction_id": 8,
+    "strategy": "serializable"
+  },
+  {
+    "step": "Lượt đầu",
+    "code": "BID_ACCEPTED",
+    "amount": 100,
+    "bid_id": 6,
+    "status": "ACCEPTED",
+    "auction_id": 8,
+    "accepted_at": "2026-10-27T22:03:36.105394+07:00",
+    "attempts": 1,
+    "retries": 0,
+    "latency_ms": 56.126,
+    "request_id": "17f496cd-be21-46e7-9e63-7068a0aedb21"
+  },
+  {
+    "step": "Gửi lại cùng UUID",
+    "code": "BID_REPLAYED",
+    "amount": 100.0,
+    "bid_id": 6,
+    "status": "REPLAYED",
+    "auction_id": 8,
+    "accepted_at": "2026-10-27T22:03:36.105394+07:00",
+    "attempts": 1,
+    "retries": 0,
+    "latency_ms": 155.578,
+    "request_id": "17f496cd-be21-46e7-9e63-7068a0aedb21"
+  },
+  {
+    "step": "Hai người cùng trả 110",
+    "code": "BID_ACCEPTED",
+    "amount": 110,
+    "bid_id": 7,
+    "status": "ACCEPTED",
+    "auction_id": 8,
+    "accepted_at": "2026-10-27T22:03:36.31853+07:00",
+    "attempts": 1,
+    "retries": 0,
+    "latency_ms": 54.795,
+    "request_id": "2ce41dd9-f24f-45f1-8680-cb8d0129d38f"
+  },
+  {
+    "step": "Hai người cùng trả 110",
+    "code": "BID_TOO_LOW",
+    "status": "REJECTED",
+    "minimum": 120.0,
+    "attempts": 2,
+    "retries": 1,
+    "latency_ms": 107.055,
+    "request_id": "5da6886b-0cdf-4c5d-be08-41f03d491e40"
+  },
+  {
+    "step": "Đóng sớm",
+    "code": "TOO_EARLY",
+    "status": "REJECTED",
+    "attempts": 1,
+    "retries": 0,
+    "latency_ms": 139.513
+  },
+  {
+    "step": "Đóng khi hết hạn",
+    "code": "AUCTION_CLOSED",
+    "status": "CLOSED",
+    "closed_at": "2026-10-27T22:03:40.766805+07:00",
+    "auction_id": 8,
+    "winning_price": 110.0,
+    "winning_bid_id": 7,
+    "attempts": 1,
+    "retries": 0,
+    "latency_ms": 160.69
+  },
+  {
+    "step": "Đóng lần nữa",
+    "code": "CLOSE_REPLAYED",
+    "status": "REPLAYED",
+    "closed_at": "2026-10-27T22:03:40.766805+07:00",
+    "auction_id": 8,
+    "winning_bid_id": 7,
+    "attempts": 1,
+    "retries": 0,
+    "latency_ms": 33.248
+  },
+  {
+    "step": "Kiểm tra bất biến",
+    "checks": [
+      {
+        "check_name": "cache_matches_history",
+        "passed": true,
+        "details": "current_price = MAX(lượt đã chấp nhận), NULL khi rỗng; vi phạm=0"
+      },
+      {
+        "check_name": "leader_matches_history",
+        "passed": true,
+        "details": "leading_bid_id thuộc phiên và là lượt có giá cao nhất; vi phạm=0"
+      },
+      {
+        "check_name": "one_result_per_auction",
+        "passed": true,
+        "details": "PK results.auction_id; tối đa một kết quả/phiên; vi phạm=0"
+      },
+      {
+        "check_name": "closed_result_matches_winner",
+        "passed": true,
+        "details": "CLOSED có đúng kết quả, OPEN chưa có kết quả; thắng bằng leader; vi phạm=0"
+      },
+      {
+        "check_name": "unique_request_ids",
+        "passed": true,
+        "details": "UNIQUE bids.request_id, chống lượt trùng cả liên phiên; vi phạm=0"
+      },
+      {
+        "check_name": "valid_bid_rules",
+        "passed": true,
+        "details": "Giá đúng lưới, đúng thời gian và tăng nghiêm ngặt theo thứ tự ID; vi phạm=0"
+      },
+      {
+        "check_name": "asset_subtypes_total_disjoint",
+        "passed": true,
+        "details": "Mỗi tài sản thuộc đúng một lớp con tương ứng kind; vi phạm=0"
+      },
+      {
+        "check_name": "audit_atomicity",
+        "passed": true,
+        "details": "Mỗi bid/result có đúng một sự kiện audit cùng dữ liệu; vi phạm=0"
+      }
+    ]
+  }
+]

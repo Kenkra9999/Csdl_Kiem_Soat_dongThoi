@@ -1,0 +1,4 @@
+-r requirements.txt
+reportlab>=4.4,<6
+pypdf>=5,<7
+PyMuPDF>=1.26,<2.1

@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "auction19-lab"
+version = "1.0.0"
+description = "PostgreSQL concurrency laboratory for online auctions (topic 19)"
+requires-python = ">=3.10"
+dependencies = ["psycopg[binary]>=3.2,<4", "python-dotenv>=1.0,<2"]
+
+[project.scripts]
+auction19 = "auction_lab.__main__:main"
+
+[tool.setuptools.packages.find]
+include = ["auction_lab*"]
