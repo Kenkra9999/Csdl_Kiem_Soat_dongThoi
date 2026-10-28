@@ -43,6 +43,13 @@ jobs:
           psql -h localhost -U postgres -v ON_ERROR_STOP=1 -c "CREATE DATABASE auction19_demo OWNER auction19_owner;"
           psql -h localhost -U postgres -v ON_ERROR_STOP=1 -c "CREATE DATABASE auction19_test OWNER auction19_owner;"
           psql -h localhost -U postgres -v ON_ERROR_STOP=1 -c "CREATE DATABASE auction19_bench OWNER auction19_owner;"
+      - name: Validate Vietnamese BCNF DDL in an isolated CI database
+        run: |
+          mkdir -p output/buoc_05
+          psql -h localhost -U postgres -d postgres -v ON_ERROR_STOP=1 -f sql/buoc_05/00_tao_database.sql
+          psql -h localhost -U postgres -d dau_gia_19_bcnf -v ON_ERROR_STOP=1 -f sql/buoc_05/01_tao_bang.sql
+          psql -h localhost -U postgres -d dau_gia_19_bcnf -v ON_ERROR_STOP=1 -f sql/buoc_05/02_kiem_tra.sql > output/buoc_05/cau-truc.txt
+          psql -h localhost -U postgres -d dau_gia_19_bcnf -v ON_ERROR_STOP=1 -f sql/buoc_05/03_thu_rang_buoc.sql | tee output/buoc_05/kiem-tra-ddl.txt
       - run: python -m auction_lab setup
       - run: python -m auction_lab test
       - run: node --test tests/frontend.test.cjs
@@ -51,4 +58,6 @@ jobs:
         if: always()
         with:
           name: integration-test-results
-          path: output/test-results.json
+          path: |
+            output/test-results.json
+            output/buoc_05/

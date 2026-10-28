@@ -7,6 +7,17 @@ Phần cốt lõi là hai phương án xử lý cùng một nghiệp vụ:
 - `row_lock`: `READ COMMITTED` và khóa dòng phiên bằng `SELECT ... FOR UPDATE`.
 - `serializable`: giao dịch `SERIALIZABLE`, phát hiện xung đột và chạy lại **toàn bộ giao dịch** khi gặp SQLSTATE `40001` hoặc `40P01`.
 
+## Bài nộp bước 5: CREATE DATABASE và DDL BCNF
+
+Đã có bộ SQL tên tiếng Việt theo sơ đồ, chạy riêng với CSDL `dau_gia_19_bcnf`:
+
+1. [Tạo database](sql/buoc_05/00_tao_database.sql), chạy riêng tại `postgres` với Auto-commit.
+2. [Tạo 11 bảng và VIEW](sql/buoc_05/01_tao_bang.sql), chạy trên database vừa tạo.
+3. [Xem bảng và các khóa/ràng buộc](sql/buoc_05/02_kiem_tra.sql).
+4. [Thử 23 kiểm tra ràng buộc, tự ROLLBACK dữ liệu thử](sql/buoc_05/03_thu_rang_buoc.sql).
+
+[Hướng dẫn pgAdmin và chứng minh BCNF bằng phụ thuộc hàm](docs/BUOC_05_DDL_BCNF.md). Bốn bảng chính là `NguoiDung`, `TaiSan`, `PhienDauGia`, `LuotTraGia`; các bảng hỗ trợ giữ quan hệ và chuyên biệt hóa trong EER. Giá hiện tại và lượt dẫn đầu của bản logic này được tính qua VIEW, không sao chép vào bảng phiên. Bộ SQL bước 5 không thay đổi các bảng/hàm của database đang chạy giao diện.
+
 ## Mở giao diện trên Windows
 
 **Bấm đúp `MO_HE_THONG.cmd`** trong thư mục dự án. Trình khởi động sử dụng môi trường `.venv` hiện có, chạy máy chủ nền và mở giao diện **Đấu Giá Việt** tại địa chỉ [http://127.0.0.1:8765](http://127.0.0.1:8765). Bấm lại sẽ dùng máy chủ đang chạy, không tạo thêm bản thứ hai. PostgreSQL phải đang chạy; bản trên máy đã có cấu hình `.env`. Khi dùng xong, bấm **`DUNG_HE_THONG.cmd`** để dừng máy chủ giao diện.
