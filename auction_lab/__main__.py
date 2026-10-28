@@ -25,7 +25,7 @@ def parser():
             p.add_argument("--amount", required=True)
             p.add_argument("--request-id", type=uuid.UUID)
     commands.add_parser("verify", help="Kiểm tra các bất biến CSDL")
-    demo = commands.add_parser("demo", help="Tạo một phiên mới và chạy kịch bản trả giá minh họa")
+    demo = commands.add_parser("scenario", aliases=["demo"], help="Chạy kịch bản nghiệp vụ trên một phiên mới")
     demo.add_argument("--strategy", choices=STRATEGIES, default="row_lock")
     bench = commands.add_parser("benchmark", help="So sánh trên CSDL *_bench riêng")
     bench.add_argument("--workers", type=int, default=12)
@@ -78,7 +78,7 @@ def main(argv=None):
         elif args.command == "verify":
             result = AuctionClient().verify()
             code = 0 if result and all(row["passed"] for row in result) else 1
-        elif args.command == "demo":
+        elif args.command in {"scenario", "demo"}:
             result = demo(args.strategy)
         elif args.command == "benchmark":
             from .benchmark import run_benchmark

@@ -10,12 +10,12 @@ if hasattr(sys.stdout, 'reconfigure'):
     sys.stdout.reconfigure(encoding='utf-8')
 
 COMMANDS = {
-    '1': ('demo',), '2': ('list',), '3': ('verify',),
+    '1': ('scenario',), '2': ('list',), '3': ('verify',),
     '4': ('test',), '5': ('benchmark',), '6': ('oql',),
 }
 while True:
     print('\nĐỀ TÀI 19 - ĐẤU GIÁ VÀ KIỂM SOÁT ĐỒNG THỜI')
-    print('1. Demo nghiệp vụ   2. Xem các phiên   3. Kiểm tra bất biến')
+    print('1. Kịch bản nghiệp vụ  2. Xem các phiên   3. Kiểm tra bất biến')
     print('4. Chạy kiểm thử    5. Đo hai giải pháp 6. Mô phỏng OQL')
     print('7. Mở báo cáo PDF   0. Thoát')
     choice = input('Chọn số: ').strip()

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" role="img" aria-labelledby="title desc">
+  <title id="title">Bộ tiền xu sưu tầm màu vàng đồng</title>
+  <desc id="desc">Minh họa những đồng xu với hoa văn lá nguyệt quế, cạnh khía và hộp trưng bày trên nền màu kem.</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop offset="0" stop-color="#eee9de"/><stop offset="1" stop-color="#d1c7b5"/></linearGradient>
+    <radialGradient id="gold" cx=".32" cy=".22" r=".85"><stop offset="0" stop-color="#f4dfaa"/><stop offset=".45" stop-color="#d4ad61"/><stop offset=".8" stop-color="#b68b46"/><stop offset="1" stop-color="#8e6938"/></radialGradient>
+    <linearGradient id="edge" x2="1" y2="1"><stop offset="0" stop-color="#f2d79b"/><stop offset=".5" stop-color="#a87e3e"/><stop offset="1" stop-color="#6b512f"/></linearGradient>
+    <linearGradient id="box" x2="1" y2="1"><stop offset="0" stop-color="#46645e"/><stop offset="1" stop-color="#243f3c"/></linearGradient>
+    <filter id="shadow" x="-40%" y="-40%" width="180%" height="200%"><feDropShadow dx="8" dy="18" stdDeviation="15" flood-color="#5b4d36" flood-opacity=".25"/></filter>
+    <path id="leaf" d="M0 0c-12-16-5-27 3-28 9 10 9 20-3 28"/>
+    <g id="coin">
+      <circle cy="7" r="132" fill="url(#edge)"/>
+      <circle r="132" fill="url(#gold)" stroke="#f2dfb1" stroke-width="3"/>
+      <circle r="123" fill="none" stroke="#82602e" stroke-opacity=".6" stroke-width="4" stroke-dasharray="1.5 5.2"/>
+      <circle r="113" fill="none" stroke="#f8e9c0" stroke-width="2" opacity=".75"/>
+      <circle r="108" fill="none" stroke="#8c6731" opacity=".5"/>
+      <g fill="#9b7338" opacity=".8"><path d="M-24 58c20-5 39-3 50 3l-4 9h-49zM-20 51c-16-11-23-28-21-44l7-22 13-13 8-27 22-4 18 15 1 22 16 17-12 9-4 15-13 5v14l17 12-4 9z"/><path d="M-6-68c26-9 42 11 39 31-8-7-15-12-28-10-10-2-16-8-11-21"/></g>
+      <path d="M-26 53c-14-11-20-27-17-43M-19-54c4-9 11-14 23-14M6-44c13 0 21 4 25 14" stroke="#f6e2b1" stroke-width="2" fill="none" opacity=".65"/>
+      <g fill="#b08443" stroke="#edcf8d" stroke-width="1"><use href="#leaf" transform="translate(-72 64) rotate(-45) scale(.75)"/><use href="#leaf" transform="translate(-85 39) rotate(-65) scale(.75)"/><use href="#leaf" transform="translate(-91 10) rotate(-86) scale(.75)"/><use href="#leaf" transform="translate(-84-18) rotate(-102) scale(.75)"/><use href="#leaf" transform="translate(72 64) rotate(45) scale(-.75 .75)"/><use href="#leaf" transform="translate(85 39) rotate(65) scale(-.75 .75)"/><use href="#leaf" transform="translate(91 10) rotate(86) scale(-.75 .75)"/><use href="#leaf" transform="translate(84-18) rotate(102) scale(-.75 .75)"/></g>
+      <path d="M-49 82c-46-20-57-63-44-99M49 82c46-20 57-63 44-99" stroke="#926b33" fill="none" stroke-width="2"/>
+      <path d="m0-91 2 5 6 1-4 4 1 6-5-3-5 3 1-6-4-4 6-1z" fill="#96703a"/>
+      <path d="M-21 88h42" stroke="#f4da9e" stroke-width="3" stroke-linecap="round"/>
+    </g>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <path d="M0 443c273-42 555-27 800 45v112H0z" fill="#e3dacb" opacity=".5"/>
+  <g transform="translate(410 302) rotate(-12)" filter="url(#shadow)">
+    <rect x="-223" y="-182" width="446" height="340" rx="16" fill="url(#box)"/>
+    <rect x="-211" y="-170" width="422" height="316" rx="10" fill="none" stroke="#6e8580" stroke-opacity=".6"/>
+    <rect x="-194" y="-153" width="388" height="282" rx="8" fill="#193632"/>
+    <use href="#coin" transform="translate(25-13) scale(.89)"/>
+  </g>
+  <g transform="translate(258 396) rotate(-17) scale(.88)" filter="url(#shadow)"><use href="#coin"/></g>
+  <g transform="translate(565 415) rotate(15) scale(.63)" filter="url(#shadow)"><use href="#coin"/></g>
+</svg>

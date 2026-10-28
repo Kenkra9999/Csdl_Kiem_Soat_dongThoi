@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<testsuites>
+	<testcase name="money retains cents above Number.MAX_SAFE_INTEGER" time="0.013647" classname="test" file="C:\Users\kenkr\OneDrive\Desktop\Csdl_kiem_soat_dongthoi\tests\frontend.test.cjs"/>
+	<testcase name="Vietnamese and canonical decimal inputs preserve exact intent" time="0.001623" classname="test" file="C:\Users\kenkr\OneDrive\Desktop\Csdl_kiem_soat_dongthoi\tests\frontend.test.cjs"/>
+	<testcase name="auction state uses server time and treats the closing boundary as ended" time="0.001434" classname="test" file="C:\Users\kenkr\OneDrive\Desktop\Csdl_kiem_soat_dongthoi\tests\frontend.test.cjs"/>
+	<testcase name="new filter response wins even when an earlier request finishes last" time="0.001732" classname="test" file="C:\Users\kenkr\OneDrive\Desktop\Csdl_kiem_soat_dongthoi\tests\frontend.test.cjs"/>
+	<testcase name="forced post-transaction refresh supersedes an in-flight poll" time="0.000928" classname="test" file="C:\Users\kenkr\OneDrive\Desktop\Csdl_kiem_soat_dongthoi\tests\frontend.test.cjs"/>
+	<testcase name="opening another auction releases the previous polling guard" time="0.001030" classname="test" file="C:\Users\kenkr\OneDrive\Desktop\Csdl_kiem_soat_dongthoi\tests\frontend.test.cjs"/>
+	<testcase name="closing another auction cannot overwrite the currently open form" time="0.001068" classname="test" file="C:\Users\kenkr\OneDrive\Desktop\Csdl_kiem_soat_dongthoi\tests\frontend.test.cjs"/>
+	<testcase name="failed metrics load can be retried when the page is revisited" time="0.000920" classname="test" file="C:\Users\kenkr\OneDrive\Desktop\Csdl_kiem_soat_dongthoi\tests\frontend.test.cjs"/>
+	<!-- tests 8 -->
+	<!-- suites 0 -->
+	<!-- pass 8 -->
+	<!-- fail 0 -->
+	<!-- cancelled 0 -->
+	<!-- skipped 0 -->
+	<!-- todo 0 -->
+	<!-- duration_ms 110.9704 -->
+</testsuites>

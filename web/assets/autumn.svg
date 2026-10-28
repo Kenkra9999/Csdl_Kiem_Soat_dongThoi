@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" role="img" aria-labelledby="title desc">
+  <title id="title">Tranh con phố mùa thu trong khung gỗ sẫm</title>
+  <desc id="desc">Minh họa tranh phố nhỏ với mái ngói, cây mùa thu màu vàng cam và nền tường kem ấm.</desc>
+  <defs>
+    <linearGradient id="background" x2="1" y2="1"><stop offset="0" stop-color="#e9dfcf"/><stop offset="1" stop-color="#cec7b8"/></linearGradient>
+    <linearGradient id="frame" x2="1" y2=".6"><stop offset="0" stop-color="#5b4936"/><stop offset=".5" stop-color="#92704b"/><stop offset="1" stop-color="#473c30"/></linearGradient>
+    <linearGradient id="paper" x2="0" y2="1"><stop offset="0" stop-color="#e8dfc9"/><stop offset="1" stop-color="#baa98b"/></linearGradient>
+    <filter id="shadow" x="-25%" y="-30%" width="160%" height="180%"><feDropShadow dx="12" dy="22" stdDeviation="17" flood-color="#44372a" flood-opacity=".28"/></filter>
+    <clipPath id="art"><rect x="164" y="107" width="472" height="354"/></clipPath>
+  </defs>
+  <rect width="800" height="600" fill="url(#background)"/>
+  <path d="M0 522h800v78H0z" fill="#d5ccbc"/>
+  <ellipse cx="402" cy="514" rx="279" ry="23" fill="#81745e" opacity=".14"/>
+  <g filter="url(#shadow)">
+    <rect x="131" y="74" width="538" height="420" rx="2" fill="url(#frame)"/>
+    <rect x="141" y="84" width="518" height="400" fill="none" stroke="#aa8862" stroke-opacity=".7"/>
+    <rect x="153" y="96" width="494" height="376" fill="#f1e7d4"/>
+    <g clip-path="url(#art)">
+      <path d="M164 107h472v354H164z" fill="url(#paper)"/>
+      <path d="m164 238 80-39 44 34 80 16 39 63-73 149H164z" fill="#b79b7e"/>
+      <path d="m636 197-75 26-81 34-57 55 70 149h143z" fill="#84918b"/>
+      <path d="m164 243 79-52 50 33-54-17-75 47z" fill="#6c675a"/>
+      <path d="m493 262 74-44 69-17v15l-67 18-65 39z" fill="#5e706c"/>
+      <path d="m299 263 57 5 51 45-25 18-83-38z" fill="#cbb999"/>
+      <path d="m334 461 73-149h16l70 149z" fill="#d9c8a6"/>
+      <path d="m355 461 57-139 35 139" fill="#e5d5b4"/>
+      <path d="m164 358 167-19m-167 64 142-29m268-65 62-16m-42 74 42-9" stroke="#7c725c" stroke-width="3" opacity=".4"/>
+      <path d="M193 265h23v41h-23zm49-12h22v41h-22zm-47 95h24v51h-24zm51-14h24v52h-24z" fill="#6f7266"/>
+      <path d="m529 270 19-5v31l-19 5zm40-15 22-6v34l-22 6zm-22 76 23-5v48l-23 5zm47-12 22-5v51l-22 4z" fill="#c4bea6"/>
+      <path d="m310 109 6 160-15 83m15-98-46-68m43 44 43-74M535 107l-17 160 31 124m-29-152 61-54m-58 22-42-59" stroke="#6f6654" stroke-width="8" fill="none"/>
+      <g fill="#c18b45"><circle cx="253" cy="143" r="41"/><circle cx="299" cy="124" r="49"/><circle cx="340" cy="139" r="45"/><circle cx="282" cy="181" r="35"/><circle cx="359" cy="180" r="30"/><circle cx="499" cy="133" r="47"/><circle cx="552" cy="122" r="50"/><circle cx="589" cy="164" r="49"/><circle cx="542" cy="179" r="35"/></g>
+      <g fill="#a76a3c" opacity=".76"><circle cx="240" cy="174" r="25"/><circle cx="326" cy="172" r="29"/><circle cx="366" cy="128" r="25"/><circle cx="475" cy="160" r="26"/><circle cx="576" cy="200" r="24"/><circle cx="619" cy="136" r="35"/></g>
+      <g fill="#d9ad5e"><circle cx="272" cy="120" r="25"/><circle cx="338" cy="114" r="23"/><circle cx="319" cy="192" r="17"/><circle cx="525" cy="116" r="25"/><circle cx="566" cy="151" r="23"/></g>
+      <path d="m367 373-4 27m8-27 2 27m-8-40 5-2 4 8-2 14h-10l-1-13z" stroke="#6f6755" stroke-width="3" fill="#6f6755"/>
+      <circle cx="367" cy="354" r="4" fill="#706453"/>
+      <g fill="#ad7e47" opacity=".6"><ellipse cx="363" cy="426" rx="5" ry="2"/><ellipse cx="454" cy="409" rx="4" ry="2"/><ellipse cx="399" cy="440" rx="6" ry="2"/><ellipse cx="479" cy="447" rx="4" ry="2"/><ellipse cx="331" cy="410" rx="4" ry="2"/></g>
+    </g>
+  </g>
+</svg>

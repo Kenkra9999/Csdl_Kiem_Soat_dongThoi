@@ -7,17 +7,39 @@ Phần cốt lõi là hai phương án xử lý cùng một nghiệp vụ:
 - `row_lock`: `READ COMMITTED` và khóa dòng phiên bằng `SELECT ... FOR UPDATE`.
 - `serializable`: giao dịch `SERIALIZABLE`, phát hiện xung đột và chạy lại **toàn bộ giao dịch** khi gặp SQLSTATE `40001` hoặc `40P01`.
 
-## Bắt đầu trên Windows
+## Mở giao diện trên Windows
 
-**Trên máy đã cấu hình sẵn, bấm đúp `CHAY_DEMO.cmd`** để mở menu tiếng Việt: xem phiên, demo nghiệp vụ, kiểm tra, chạy test và benchmark so sánh hai cơ chế. Hoặc mở PowerShell tại thư mục dự án, dùng môi trường `.venv` hiện có; PostgreSQL phải đang chạy:
+**Bấm đúp `MO_HE_THONG.cmd`** trong thư mục dự án. Trình khởi động sử dụng môi trường `.venv` hiện có, chạy máy chủ nền và mở giao diện **Đấu Giá Việt** tại địa chỉ [http://127.0.0.1:8765](http://127.0.0.1:8765). Bấm lại sẽ dùng máy chủ đang chạy, không tạo thêm bản thứ hai. PostgreSQL phải đang chạy; bản trên máy đã có cấu hình `.env`. Khi dùng xong, bấm **`DUNG_HE_THONG.cmd`** để dừng máy chủ giao diện.
+
+Giao diện có ba khu vực:
+
+- **Phiên đấu giá:** tìm kiếm, lọc tài sản/trạng thái, xem chi tiết, chọn người tham gia giả lập và trả giá; quan sát lịch sử và phát lại cùng yêu cầu.
+- **Kết quả:** xem phiên đã chốt, người thắng, giá thắng hoặc kết quả không có người thắng.
+- **Kiểm soát đồng thời:** xem các bất biến, kết quả kiểm thử/benchmark đã lưu và chạy cạnh tranh cùng mức giá trên CSDL kiểm thử riêng.
+
+Xem [hướng dẫn tương tác từng bước](docs/GIAO_DIEN.md). Có thể mở hai cửa sổ trình duyệt để đóng vai hai người tham gia. Đây là mô phỏng phục vụ môn học; bộ chọn người tham gia không phải cơ chế đăng nhập hay xác thực danh tính.
+
+Để chạy trực tiếp từ PowerShell:
+
+```powershell
+.\.venv\Scripts\python.exe -m auction_lab.web --open
+```
+
+Lệnh PowerShell trực tiếp ở trên giữ máy chủ trong cửa sổ hiện tại; nhấn Ctrl+C để dừng. Cách mở bằng `MO_HE_THONG.cmd` chạy nền nên không cần giữ cửa sổ dòng lệnh.
+
+Giao diện và HTTP API chạy cục bộ. Các bảng, chỉ mục, trigger, hàm nghiệp vụ và bộ script `sql/` giữ nguyên. Trả giá và chốt phiên gọi lại `AuctionClient`, sau đó thực thi các hàm PostgreSQL hiện có; giao diện không tự quyết định người thắng hay ghi đè giá.
+
+## Công cụ dòng lệnh
+
+**Bấm đúp `CONG_CU_KIEM_THU.cmd`** để mở menu tiếng Việt cho kịch bản nghiệp vụ, kiểm tra, test và benchmark. Hoặc dùng PowerShell trong thư mục dự án:
 
 ```powershell
 .\.venv\Scripts\python.exe -m auction_lab list
-.\.venv\Scripts\python.exe -m auction_lab demo
+.\.venv\Scripts\python.exe -m auction_lab scenario
 .\.venv\Scripts\python.exe -m auction_lab verify
 ```
 
-Lệnh `demo` trình diễn nghiệp vụ; `verify` kiểm tra các bất biến trong CSDL. Chi tiết tùy chọn chính xác của từng lệnh:
+Lệnh `scenario` chạy kịch bản nghiệp vụ; `verify` kiểm tra các bất biến trong CSDL. Tên `demo` được giữ như bí danh tương thích cho các lệnh cũ. Chi tiết tùy chọn chính xác của từng lệnh:
 
 ```powershell
 .\.venv\Scripts\python.exe -m auction_lab --help
@@ -51,20 +73,23 @@ Nếu đã tự tạo tài khoản/CSDL, có thể sao chép `.env.example` thà
 .\.venv\Scripts\python.exe -m auction_lab oql
 ```
 
-Kiểm thử/benchmark dùng các CSDL dùng riêng có tên mang hậu tố `_test`/`_bench`, có thể tạo lại dữ liệu trong schema `auction` ở các CSDL đó. CSDL demo được giữ riêng. Kết quả đo là số liệu chạy thực tế, có thể thay đổi theo CPU, tải máy và lịch chạy giao dịch; không dùng một lần đo để tuyên bố phương án luôn nhanh hơn.
+Kiểm thử/benchmark dùng các CSDL dùng riêng có tên mang hậu tố `_test`/`_bench`, có thể tạo lại dữ liệu trong schema `auction` ở các CSDL đó. CSDL vận hành được giữ riêng. Kết quả đo là số liệu chạy thực tế, có thể thay đổi theo CPU, tải máy và lịch chạy giao dịch; không dùng một lần đo để tuyên bố phương án luôn nhanh hơn.
+
+Tên CSDL `auction19_demo` được giữ nguyên để tương thích cấu hình và dữ liệu đồ án đã cài, không cần tạo lại hay đổi tên trong pgAdmin. Các tệp mở chương trình và kết quả nghiệp vụ đã dùng tên dành cho bản nộp: `MO_HE_THONG.cmd`, `DUNG_HE_THONG.cmd`, `CONG_CU_KIEM_THU.cmd`, `output/kich-ban-nghiep-vu.json`, `output/kich-ban-serializable.json`, `output/truy-van-doi-tuong.json`.
 
 ## Tài liệu để học và bảo vệ
 
-- [Báo cáo PDF 23 trang](output/pdf/BAO_CAO_DE_TAI_19.pdf), có sơ đồ EER và các phụ lục chạy thử.
+- [Báo cáo PDF](output/pdf/BAO_CAO_DE_TAI_19.pdf), có sơ đồ EER và các phụ lục chạy thử.
 - [Báo cáo đầy đủ](docs/BAO_CAO.md): đặc tả, EER, khóa và chuẩn hóa, SQL, transaction, thực nghiệm.
 - [Mô hình EER](docs/EER.md): sơ đồ quan hệ và chuyên biệt hóa tài sản.
 - [Mô hình đối tượng và OQL](docs/MO_HINH_DOI_TUONG_OQL.md): ODL/OQL học thuật và cách đối chiếu với bản mô phỏng Python.
 - [Hướng dẫn pgAdmin](docs/HUONG_DAN_PGADMIN.md): chạy SQL, mở hai Query Tool để quan sát khóa.
+- [Hướng dẫn giao diện](docs/GIAO_DIEN.md): mở hệ thống, trả giá, gửi lại yêu cầu, chốt phiên và thực nghiệm.
 - [Kịch bản trình bày và câu hỏi bảo vệ](docs/BAO_VE.md).
 
-Kết quả xác minh đi kèm: **35/35 test đạt**, benchmark 360 yêu cầu với 12 worker và 3 round cho mỗi cơ chế; mọi đợt đạt 8/8 bất biến, không có lỗi hoặc hết giới hạn retry. Số liệu chi tiết nằm trong `output/test-results.json`, `output/benchmark/summary.csv`, `results.json`, `requests.csv` và mục 8 báo cáo. Đây là số đo trên máy hiện tại, không là cam kết tốc độ trên máy khác.
+Kết quả xác minh đi kèm: **52/52 test Python/HTTP đạt**, gồm 35 kiểm thử lõi CSDL và 17 kiểm thử tầng HTTP của giao diện. Ngoài ra, **8/8 kiểm thử JavaScript đạt**, kiểm tra tiền chính xác, thay bộ lọc nhanh, chống dữ liệu cũ và trạng thái cửa sổ. Chạy bằng `node --test tests/frontend.test.cjs`; Node.js chỉ cần cho kiểm thử phát triển, không cần để chạy giao diện. Benchmark 360 yêu cầu với 12 worker và 3 round cho mỗi cơ chế giữ nguyên kết quả đo của phần CSDL; mọi đợt đạt 8/8 bất biến, không có lỗi hoặc hết giới hạn retry. Số liệu chi tiết nằm trong `output/test-results.json`, `output/benchmark/summary.csv`, `results.json`, `requests.csv` và mục 8 báo cáo. Đây là số đo trên máy hiện tại, không là cam kết tốc độ trên máy khác.
 
-Để tạo lại PDF báo cáo sau khi cập nhật Markdown/số liệu, cài `requirements-report.txt` và chạy `scripts/build_report.py` bằng Python trong `.venv`. Việc chạy demo và kiểm thử chỉ cần `requirements.txt`.
+Để tạo lại PDF báo cáo sau khi cập nhật Markdown/số liệu, cài `requirements-report.txt` và chạy `scripts/build_report.py` bằng Python trong `.venv`. Việc chạy giao diện, kịch bản nghiệp vụ và kiểm thử chỉ cần `requirements.txt`; giao diện không cần cài Node.js hay gói npm.
 
 Các script SQL theo thứ tự:
 

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" role="img" aria-labelledby="title desc">
+  <title id="title">Tranh bình minh trên biển trong khung gỗ</title>
+  <desc id="desc">Minh họa một bức tranh biển màu xanh ngọc và mặt trời đất nung, đặt trong khung gỗ trên nền tường màu kem.</desc>
+  <defs>
+    <linearGradient id="wall" x2=".8" y2="1"><stop offset="0" stop-color="#eee8da"/><stop offset="1" stop-color="#d4d3bd"/></linearGradient>
+    <linearGradient id="wood" x2="1" y2="1"><stop offset="0" stop-color="#be9a6c"/><stop offset=".45" stop-color="#e0bd88"/><stop offset="1" stop-color="#97714a"/></linearGradient>
+    <linearGradient id="sky" x2="0" y2="1"><stop offset="0" stop-color="#e7d4b6"/><stop offset="1" stop-color="#f4e7cd"/></linearGradient>
+    <linearGradient id="sea" x2=".6" y2="1"><stop offset="0" stop-color="#608d87"/><stop offset="1" stop-color="#2e625f"/></linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="170%" height="180%"><feDropShadow dx="12" dy="22" stdDeviation="17" flood-color="#434d3b" flood-opacity=".24"/></filter>
+    <clipPath id="painting"><rect x="172" y="116" width="456" height="339"/></clipPath>
+  </defs>
+  <path fill="url(#wall)" d="M0 0h800v600H0z"/>
+  <path d="M0 518h800v82H0z" fill="#ddd9c9"/>
+  <path d="M0 518h800" stroke="#eeebdf" stroke-width="2"/>
+  <ellipse cx="412" cy="512" rx="280" ry="24" fill="#6f7560" opacity=".11"/>
+  <g filter="url(#shadow)">
+    <rect x="139" y="83" width="522" height="405" rx="2" fill="url(#wood)"/>
+    <path d="M145 89h510v393H145z" fill="none" stroke="#f2d5a5" stroke-opacity=".7" stroke-width="2"/>
+    <path d="m143 87 22 22m492-22-22 22M143 484l22-22m492 22-22-22" stroke="#795c3d" stroke-opacity=".4"/>
+    <rect x="160" y="104" width="480" height="363" fill="#f8f2e4"/>
+    <rect x="170" y="114" width="460" height="343" fill="#c5b79b"/>
+    <g clip-path="url(#painting)">
+      <rect x="172" y="116" width="456" height="339" fill="url(#sky)"/>
+      <circle cx="418" cy="232" r="64" fill="#bc7053"/>
+      <path d="M172 294c64-16 91-11 146-6s120 11 180-2 106-10 130 1v168H172z" fill="url(#sea)"/>
+      <path d="M172 298c84-14 124 2 191 4s122-16 180-13 70 9 85 7" stroke="#e8dfbc" stroke-width="3" fill="none" opacity=".7"/>
+      <path d="M172 343c57-8 77 2 128 1s79-9 130-5 119 16 198 6M172 388c90-3 112 12 183 4s137-4 273 5" stroke="#88a59a" stroke-width="9" fill="none" opacity=".35"/>
+      <path d="m364 310 93 1m-81 15 68-1m-57 17 45 1m-33 17 21-1" stroke="#dec996" stroke-linecap="round" stroke-width="4" opacity=".7"/>
+      <path d="M172 359c47-27 77-34 114-31-11 17-6 27 18 34 19 6 30 17 16 28-26 20-26 39 6 65H172z" fill="#bda988"/>
+      <path d="M172 394c33-25 57-34 94-35-9 18-4 26 16 34-15 16-15 34 8 62H172z" fill="#d2c19d"/>
+      <path d="M515 280c31-20 57-20 113-11v24c-41-8-72-3-113-13" fill="#7a8d79"/>
+      <path d="m245 189 10-4 10 4m237-14 8-3 8 3" stroke="#786e58" stroke-width="1.5" fill="none" opacity=".55"/>
+      <path d="M189 130h422M189 439h422" stroke="#fff4dc" stroke-opacity=".18"/>
+    </g>
+  </g>
+  <path d="M687 516c-1-43 11-85 33-116-4 43-9 82-18 116" fill="#8b9371" opacity=".6"/>
+  <path d="M699 516c-18-29-33-50-44-67 23 6 43 23 53 44" fill="#6f8061" opacity=".55"/>
+  <path d="M675 516h48l-6 30h-37z" fill="#c7bda3"/>
+</svg>

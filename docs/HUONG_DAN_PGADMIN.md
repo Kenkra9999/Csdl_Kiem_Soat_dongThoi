@@ -1,5 +1,7 @@
 # Chạy thử và quan sát trên pgAdmin 4
 
+Để thao tác bằng giao diện, mở `MO_HE_THONG.cmd` và xem `docs/GIAO_DIEN.md`. Hướng dẫn dưới đây dùng Query Tool để kiểm tra trực tiếp dữ liệu và quan sát khóa. Cả hai cách đều kết nối cùng CSDL `auction19_demo` và cùng các hàm PostgreSQL hiện có.
+
 ## 1. Mở đúng CSDL
 
 1. Mở pgAdmin 4, mở nhóm **Servers**, chọn PostgreSQL đang chạy trên máy.
@@ -19,7 +21,7 @@ Chạy bằng nút Execute/F5. Nếu chọn một đoạn SQL, chỉ đoạn đ�
 
 Dùng CSDL riêng, tài khoản sở hữu lược đồ, chạy lần lượt `01_schema.sql`, `02_functions.sql`, `03_seed.sql` qua **Open File** trong Query Tool. `04_queries.sql` và `05_verify.sql` là truy vấn đọc/kiểm tra. Nếu dùng tài khoản ứng dụng, cấu hình riêng quyền theo script permissions và thông tin cài đặt; không cấp quyền ghi trực tiếp mọi bảng chỉ để demo.
 
-Không chạy script tạo lại dữ liệu test/benchmark vào CSDL đang chứa dữ liệu thật. CLI `setup` từ chối nếu schema đã tồn tại. Nếu đã cài rồi chỉ cần chạy `list`, `demo`, `verify`.
+Không chạy script tạo lại dữ liệu test/benchmark vào CSDL đang chứa dữ liệu thật. CLI `setup` từ chối nếu schema đã tồn tại. Nếu đã cài rồi chỉ cần chạy `list`, `scenario`, `verify`.
 
 Nếu cần chỉnh cây danh mục bằng tài khoản quản trị, dùng READ COMMITTED hoặc SERIALIZABLE có retry; trigger từ chối REPEATABLE READ để tránh đọc cây trên snapshot cũ sau khi chờ khóa. Thao tác này không thuộc đường trả giá của app.
 
@@ -46,13 +48,13 @@ ORDER BY r.auction_id;
 
 Giờ hiển thị có thể theo múi giờ session. Có thể đặt `SET TIME ZONE 'Asia/Ho_Chi_Minh';` để xem theo giờ Việt Nam; dữ liệu `timestamptz` vẫn biểu diễn cùng thời điểm tuyệt đối.
 
-## 4. Demo tự động trước khi demo thủ công
+## 4. Kịch bản tự động trước khi thao tác thủ công
 
 Trong PowerShell tại thư mục dự án:
 
 ```powershell
-.\.venv\Scripts\python.exe -m auction_lab demo --strategy row_lock
-.\.venv\Scripts\python.exe -m auction_lab demo --strategy serializable
+.\.venv\Scripts\python.exe -m auction_lab scenario --strategy row_lock
+.\.venv\Scripts\python.exe -m auction_lab scenario --strategy serializable
 ```
 
 Mỗi lần chạy tạo một phiên mới, giá khởi điểm 100, bước 10, hạn khoảng 4 giây. Chương trình thực hiện lượt đầu, replay cùng UUID, hai người cùng trả 110, đóng sớm, đóng đúng hạn, đóng lại và kiểm tra bất biến. Ghi lại `auction_id` trong JSON rồi lọc dữ liệu phiên đó trên pgAdmin. Demo tạo thêm dữ liệu, không reset schema demo.

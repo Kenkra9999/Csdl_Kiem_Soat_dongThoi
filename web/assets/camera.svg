@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" role="img" aria-labelledby="title desc">
+  <title id="title">Máy ảnh mirrorless màu đen</title>
+  <desc id="desc">Minh họa máy ảnh mirrorless với thân máy màu than, ống kính nhiều lớp và các vòng điều chỉnh kim loại trên nền kem.</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop offset="0" stop-color="#eeece4"/><stop offset="1" stop-color="#d2d2c5"/></linearGradient>
+    <linearGradient id="body" x2="0" y2="1"><stop offset="0" stop-color="#4b5150"/><stop offset=".2" stop-color="#303635"/><stop offset=".7" stop-color="#1f292a"/><stop offset="1" stop-color="#111c20"/></linearGradient>
+    <linearGradient id="top" x2=".4" y2="1"><stop offset="0" stop-color="#737875"/><stop offset=".4" stop-color="#454c4b"/><stop offset="1" stop-color="#252e30"/></linearGradient>
+    <linearGradient id="rim" x2="1" y2="1"><stop offset="0" stop-color="#a7aca6"/><stop offset=".2" stop-color="#424c4d"/><stop offset=".53" stop-color="#18262a"/><stop offset=".8" stop-color="#6e7b78"/><stop offset="1" stop-color="#263337"/></linearGradient>
+    <radialGradient id="glass" cx=".35" cy=".28" r=".8"><stop offset="0" stop-color="#6d928b"/><stop offset=".25" stop-color="#2e595a"/><stop offset=".6" stop-color="#132e37"/><stop offset="1" stop-color="#08151e"/></radialGradient>
+    <radialGradient id="inner"><stop offset="0" stop-color="#304e5b"/><stop offset=".5" stop-color="#18303e"/><stop offset="1" stop-color="#060f16"/></radialGradient>
+    <filter id="shadow" x="-30%" y="-40%" width="170%" height="200%"><feDropShadow dx="10" dy="24" stdDeviation="18" flood-color="#344540" flood-opacity=".25"/></filter>
+    <pattern id="grip" width="5" height="5" patternUnits="userSpaceOnUse"><path d="m0 1 4 4M-1 4l2-2m2-2 2 2" stroke="#a4aaa1" stroke-width=".5" opacity=".23"/></pattern>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <ellipse cx="411" cy="475" rx="263" ry="37" fill="#68766c" opacity=".12"/>
+  <g transform="rotate(-7 400 322)" filter="url(#shadow)">
+    <path d="M188 253h420l18 23v168l-20 23H192l-21-21V279z" fill="url(#body)" stroke="#162126" stroke-width="3"/>
+    <path d="m188 253 26-29h106l30-42h112l32 43h86l28 28z" fill="url(#top)" stroke="#414c4c" stroke-width="2"/>
+    <path d="m328 224 30-37h96l29 38z" fill="#404b4c"/>
+    <path d="M362 193h84l16 25H347z" fill="#1b2a30"/>
+    <path d="M370 195h67l9 13h-86z" fill="#a0b5ad" opacity=".3"/>
+    <rect x="185" y="283" width="109" height="162" rx="14" fill="#202c2f"/>
+    <rect x="185" y="283" width="109" height="162" rx="14" fill="url(#grip)"/>
+    <path d="M197 293v137m9-142v147m9-147v147m10-147v147" stroke="#728078" stroke-width=".6" opacity=".28"/>
+    <path d="M204 251h70v20h-70z" fill="#69716d"/>
+    <ellipse cx="241" cy="238" rx="31" ry="10" fill="#252f31"/>
+    <ellipse cx="241" cy="234" rx="31" ry="10" fill="#626c67" stroke="#949b90"/>
+    <ellipse cx="241" cy="232" rx="22" ry="6" fill="#3b4848"/>
+    <ellipse cx="547" cy="232" rx="31" ry="11" fill="#161f24"/>
+    <ellipse cx="547" cy="227" rx="31" ry="11" fill="#6c756f" stroke="#a0a59a"/>
+    <path d="m520 224 54 7m-51-12 50 13m-42-16 34 14" stroke="#222f33" stroke-width="1" opacity=".7"/>
+    <path d="M596 278h23v39h-13v-23h-10M179 278h-16v35h10v-24h9" stroke="#646f6b" stroke-width="6" fill="none"/>
+    <path d="M310 272h55v5h-55" fill="#c4c9be" opacity=".7"/>
+    <circle cx="578" cy="293" r="7" fill="#789990" stroke="#a3b2a4"/>
+    <rect x="298" y="428" width="23" height="8" rx="3" fill="#9b6150"/>
+    <circle cx="435" cy="357" r="139" fill="#111e24" stroke="#5d6a66" stroke-width="3"/>
+    <circle cx="435" cy="355" r="127" fill="url(#rim)" stroke="#829087" stroke-width="2"/>
+    <circle cx="435" cy="355" r="117" fill="#17282d" stroke="#0c191e" stroke-width="8"/>
+    <circle cx="435" cy="355" r="112" fill="none" stroke="#7c8780" stroke-width="4" stroke-dasharray="1 6"/>
+    <circle cx="435" cy="355" r="101" fill="#101f26" stroke="#71817a" stroke-width="2"/>
+    <circle cx="435" cy="355" r="91" fill="url(#glass)" stroke="#06171e" stroke-width="5"/>
+    <circle cx="435" cy="355" r="71" fill="none" stroke="#54756f" stroke-width="2" opacity=".75"/>
+    <circle cx="435" cy="355" r="54" fill="url(#inner)" stroke="#162e37" stroke-width="5"/>
+    <path d="m435 319 31 18v36l-31 18-31-18v-36z" fill="#080f17" stroke="#3e5860" stroke-width="2"/>
+    <ellipse cx="403" cy="318" rx="34" ry="17" transform="rotate(-36 403 318)" fill="#c4d6bb" opacity=".17"/>
+    <path d="M371 378c9 26 31 39 62 43" stroke="#739c99" stroke-width="5" stroke-linecap="round" fill="none" opacity=".18"/>
+    <circle cx="467" cy="391" r="11" fill="#7c949e" opacity=".18"/>
+  </g>
+</svg>

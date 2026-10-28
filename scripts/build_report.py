@@ -100,11 +100,18 @@ def diagram():
 
 
 class Report(BaseDocTemplate):
+    def beforeDocument(self):
+        self.in_appendix = False
+
     def afterFlowable(self, flowable):
         if isinstance(flowable, Paragraph) and flowable.style.name in ('Heading1', 'Heading2'):
             level = 0 if flowable.style.name == 'Heading1' else 1
             title = flowable.getPlainText()
             if title in ('Mục lục', 'BÁO CÁO ĐỒ ÁN CƠ SỞ DỮ LIỆU NÂNG CAO'):
+                return
+            if title.startswith('Phụ lục '):
+                self.in_appendix = True
+            elif self.in_appendix and level == 1:
                 return
             key = f'h{self.seq.nextf("heading")}'
             self.canv.bookmarkPage(key)
@@ -122,10 +129,10 @@ def inline(text):
 
 
 def markdown_blocks(source, styles, width=487):
-    lines=source.splitlines(); out=[]; paragraph=[]; i=0
+    lines=source.splitlines(); out=[]; paragraph=[]; i=0; references=False
     def flush():
         if paragraph:
-            out.append(Paragraph(inline(' '.join(paragraph)),styles['Normal']))
+            out.append(Paragraph(inline(' '.join(paragraph)),styles['Small'] if references else styles['Normal']))
             paragraph.clear()
     while i < len(lines):
         line=lines[i].rstrip()
@@ -163,10 +170,11 @@ def markdown_blocks(source, styles, width=487):
         elif line.startswith('#'):
             flush(); m=re.match(r'^(#+)\s+(.*)',line)
             if m:
+                references = m[2].strip() == 'Tài liệu tham khảo'
                 level=min(len(m[1]),3)
                 out.append(Paragraph(inline(m[2]),styles[f'Heading{level}']))
         elif re.match(r'^\s*[-*] ',line) or re.match(r'^\s*\d+\. ',line):
-            flush(); out.append(Paragraph(inline(line.strip()),styles['Bullet']))
+            flush(); out.append(Paragraph(inline(line.strip()),styles['Small'] if references else styles['Bullet']))
         elif line.startswith('>'):
             flush(); out.append(Paragraph(inline(line.lstrip('> ')),styles['Quote']))
         elif not line.strip(): flush()
@@ -220,14 +228,14 @@ def main():
     report=ROOT/'docs/BAO_CAO.md'
     if not report.exists(): raise RuntimeError('Chưa có docs/BAO_CAO.md')
     story += markdown_blocks(report.read_text(encoding='utf-8'),styles)
-    for path,title in ((ROOT/'docs/MO_HINH_DOI_TUONG_OQL.md','Phụ lục A - Mô hình đối tượng và OQL'),(ROOT/'docs/HUONG_DAN_PGADMIN.md','Phụ lục B - Thao tác pgAdmin'),(ROOT/'docs/BAO_VE.md','Phụ lục C - Kịch bản trình bày')):
+    for path,title in ((ROOT/'docs/MO_HINH_DOI_TUONG_OQL.md','Phụ lục A - Mô hình đối tượng và OQL'),(ROOT/'docs/HUONG_DAN_PGADMIN.md','Phụ lục B - Thao tác pgAdmin'),(ROOT/'docs/BAO_VE.md','Phụ lục C - Kịch bản trình bày'),(ROOT/'docs/GIAO_DIEN.md','Phụ lục D - Giao diện và thao tác trực quan')):
         if path.exists():
             story += [PageBreak(),Paragraph(title,styles['Heading1'])]
             source=re.sub(r'^# [^\n]*\n','',path.read_text(encoding='utf-8'),count=1)
             story += markdown_blocks(source,styles)
     measured=ROOT/'docs/KET_QUA_THUC_NGHIEM.md'
     if measured.exists():
-        story += [PageBreak(),Paragraph('Phụ lục D - Kết quả thực đo',styles['Heading1'])]
+        story += [PageBreak(),Paragraph('Phụ lục E - Kết quả thực đo',styles['Heading1'])]
         story += markdown_blocks(measured.read_text(encoding='utf-8'),styles)
     doc.multiBuild(story)
     renderSVG.drawToFile(diagram(),str(ROOT/'docs/EER.svg'))

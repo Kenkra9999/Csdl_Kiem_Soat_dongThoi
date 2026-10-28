@@ -22,7 +22,7 @@ Quản lý người dùng, cây danh mục tài sản, tài sản có chuyên bi
 
 ### 1.3. Sản phẩm bàn giao
 
-Mã SQL tạo và kiểm tra CSDL; dữ liệu mẫu; hàm trả giá/đóng phiên/báo cáo; truy vấn nâng cao; client Python; kiểm thử đồng thời; benchmark tái lập được; mô hình EER, đối tượng và OQL; hướng dẫn pgAdmin; báo cáo và kịch bản bảo vệ.
+Mã SQL tạo và kiểm tra CSDL; dữ liệu mẫu; hàm trả giá/đóng phiên/báo cáo; truy vấn nâng cao; client Python; giao diện web cục bộ; kiểm thử đồng thời; benchmark tái lập được; mô hình EER, đối tượng và OQL; hướng dẫn pgAdmin; báo cáo và kịch bản bảo vệ.
 
 ## 2. Đặc tả nghiệp vụ
 
@@ -330,7 +330,7 @@ Workload có seed shuffle 19019, 12 worker, 60 yêu cầu mỗi strategy mỗi r
 
 Cả 6 đợt đều có errors=0, exhausted=0 và 8/8 bất biến đạt. Tổng theo strategy: row_lock có 11 accepted, 6 replayed, 163 rejected và 0 retry; serializable có 18 accepted, 8 replayed, 154 rejected và 39 retry. Mean gộp 180 yêu cầu/strategy lần lượt khoảng 106.508 ms và 110.734 ms. Không lấy trung bình các p95 theo round để gọi đó là p95 gộp.
 
-Bộ test cuối cùng: **35/35 đạt**, 0 failure, 0 error, 0 skip, thời gian 17.034 giây theo `output/test-results.json`, ghi nhận lúc 22:03:26 ngày 27/10/2026 theo giờ Việt Nam. Kiểm thử bao gồm lỗi tuần tự hóa thật và retry toàn transaction, không chỉ mô phỏng exception phía client. Kịch bản biên dùng Event để giữ một bid hợp lệ chưa commit qua hạn đóng, chứng minh close phải chờ và chốt đúng bid đó ở cả hai protocol; với SERIALIZABLE, close thực sự có retry.
+Bộ test sau khi tích hợp giao diện: **52/52 đạt**, gồm 35 kiểm thử lõi CSDL và 17 kiểm thử tầng HTTP của giao diện; 0 failure, 0 error, 0 skip, thời gian 22.182 giây theo `output/test-results.json`, ghi nhận lúc 07:35:53 ngày 28/10/2026 theo giờ Việt Nam. Kiểm thử lõi bao gồm lỗi tuần tự hóa thật và retry toàn transaction, không chỉ mô phỏng exception phía client. Kịch bản biên dùng Event để giữ một bid hợp lệ chưa commit qua hạn đóng, chứng minh close phải chờ và chốt đúng bid đó ở cả hai protocol; với SERIALIZABLE, close thực sự có retry. Nhóm HTTP kiểm tra truy vấn đọc, thao tác trả giá/phát lại, trạng thái chốt phiên, từ chối yêu cầu không hợp lệ, bảo vệ token/Origin/đường dẫn và kịch bản cạnh tranh thực. Benchmark 360 yêu cầu ở bảng trên là lần đo CSDL đã lưu; bổ sung HTTP không thay đổi thuật toán hay số liệu của lần đo đó.
 
 Ở workload cục bộ này, row_lock có p95 thấp hơn ở cả ba round và không cần retry. SERIALIZABLE có 39 retry nhưng vẫn hoàn thành mọi yêu cầu logic; mean của round 2 và 3 có thể thấp hơn row_lock. Số accepted khác nhau vì giá cao có thể được xử lý sớm và làm những giá thấp còn lại bị từ chối. Các quan sát này không chứng minh ưu thế phổ quát ngoài cấu hình đã đo.
 <!-- BENCHMARK_RESULTS_END -->
@@ -363,9 +363,54 @@ Lỗi chèn có thể làm sequence ID bị khuyết vì sequence không rollbac
 
 README cung cấp lệnh chạy; `docs/HUONG_DAN_PGADMIN.md` chỉ cách dùng Query Tool và quan sát chờ khóa bằng hai cửa sổ. `docs/BAO_VE.md` đề xuất thứ tự demo, giải thích từng bất biến và các câu hỏi thường gặp.
 
+`MO_HE_THONG.cmd` mở giao diện web cục bộ bằng máy chủ nền và dùng lại phiên máy chủ đã chạy; `DUNG_HE_THONG.cmd` dừng máy chủ giao diện; `CONG_CU_KIEM_THU.cmd` mở menu công cụ. Hướng dẫn thao tác giao diện nằm trong `docs/GIAO_DIEN.md`. Lệnh `scenario` là tên chính của kịch bản nghiệp vụ; tên `demo` vẫn được nhận như bí danh để tương thích hướng dẫn cũ. Tên CSDL `auction19_demo` giữ nguyên để không thay đổi kết nối và dữ liệu đã cài.
+
 Tài khoản app chỉ có quyền đọc dữ liệu cần thiết và EXECUTE hàm nghiệp vụ; không cấp sửa bảng trực tiếp. SECURITY DEFINER phải cố định search_path an toàn, chỉ tham chiếu đối tượng tin cậy và thu hồi quyền EXECUTE mặc định PUBLIC khi cần. Chủ sở hữu CSDL vẫn là tài khoản quản trị tin cậy có thể thay đổi lược đồ; không coi ràng buộc trong ứng dụng là ranh giới chống superuser.
 
 Hướng phát triển: quản lý duyệt đăng ký qua hàm có protocol rõ; quản lý vòng đời tài sản/phiên; job đóng phiên đến hạn; giao diện người dùng có xác thực; phân trang lịch sử; hàng đợi/thông báo sau commit; giám sát lock/retry; thêm thử nghiệm quy mô lớn và nhiều phiên. Thanh toán, đấu giá có giá dự trữ hoặc gia hạn chống sniping cần đặc tả lại quy tắc trước khi mở rộng.
+
+## 11. Lớp giao diện web cục bộ
+
+### 11.1. Mục đích và kiến trúc
+
+Giao diện Đấu Giá Việt bổ sung cách thao tác bằng trình duyệt cho chính CSDL đã xây dựng. Các màn hình gồm danh sách/chi tiết phiên đấu giá, kết quả và thực nghiệm. Các bảng, khóa, chỉ mục, trigger, hàm trả giá/đóng phiên và bộ SQL gốc giữ nguyên; không thêm một bản database thay thế cho giao diện.
+
+Luồng ghi nghiệp vụ:
+
+```text
+Trình duyệt
+    -> HTTP API trên 127.0.0.1
+    -> AuctionClient.bid / AuctionClient.close
+    -> transaction READ COMMITTED hoặc SERIALIZABLE
+    -> auction.place_bid / auction.close_auction
+    -> bids + cache phiên + results + audit hiện có
+```
+
+HTTP server dùng thư viện chuẩn Python và phục vụ các tệp HTML/CSS/JavaScript cục bộ. Không cần cài Node.js, framework frontend hay tải font từ internet để chạy bản nộp. API đọc dùng truy vấn tham số hóa; dữ liệu tiền được tuần tự hóa thành chuỗi thập phân. Trình duyệt định dạng tiền để hiển thị, còn kiểm tra đúng giá/bước giá vẫn thực hiện trong PostgreSQL.
+
+### 11.2. Quy tắc tương tác và tính đúng
+
+Bộ chọn người tham gia liệt kê người đã được duyệt của phiên; đó là cơ chế mô phỏng danh tính trong đồ án, không phải đăng nhập thương mại. Thông tin thời gian máy chủ giúp hiển thị bộ đếm còn lại, nhưng không được dùng để thay quyết định hạn nhận của hàm SQL. Trường hợp giao diện còn hiển thị giá cũ khi một cửa sổ khác đã trả giá vẫn được xử lý đúng: hàm kiểm tra lại trạng thái trong transaction và có thể trả `BID_TOO_LOW`.
+
+Mỗi ý định trả giá mới có UUID riêng. Thao tác gửi lại dùng lại cùng UUID và payload để quan sát idempotency. Chốt phiên đi qua hàm đóng hiện có, do đó không tự chốt sớm hoặc tạo thêm người thắng. Thông báo trên giao diện phân biệt từ chối nghiệp vụ, kết quả phát lại và lỗi hạ tầng; không coi phản hồi HTTP thành công là bằng chứng rằng một lượt trả giá đã được chấp nhận.
+
+### 11.3. Thực nghiệm và kiểm chứng trên giao diện
+
+Màn hình thực nghiệm đọc tám bất biến từ `auction.verify_invariants()` và đọc các kết quả kiểm thử/benchmark đã lưu kèm thời điểm. Các chỉ số lưu được ghi rõ là kết quả đợt đo trước, tách khỏi trạng thái hiện tại của phiên.
+
+Kịch bản cạnh tranh cùng mức giá tạo các worker với kết nối PostgreSQL thật trong CSDL có hậu tố `_test`. Đợt chạy tạo phiên riêng và không reset dữ liệu vận hành của `auction19_demo`. Nếu dữ liệu kiểm thử chưa được khởi tạo, dùng chính SQL cài đặt sẵn có. Chỉ kịch bản thực nghiệm được định trước được cung cấp qua API; trình duyệt không được gửi câu SQL hay câu lệnh hệ điều hành tùy ý.
+
+### 11.4. Phạm vi an toàn và giới hạn
+
+Máy chủ lắng nghe loopback; yêu cầu ghi có token và kiểm tra Origin; API không trả chuỗi kết nối hay mật khẩu. Tài khoản app vẫn không được sửa trực tiếp bảng. Tài khoản chủ sở hữu chỉ phục vụ cài đặt/tạo dữ liệu thực nghiệm theo phạm vi đã công bố.
+
+Đây là giao diện cho đồ án cục bộ, chưa có xác thực người dùng thực, thanh toán, giao nhận, thông báo ngoài hệ thống hoặc cơ chế vận hành internet. Khi mở rộng các chức năng này cần thiết kế thêm ranh giới xác thực và phân quyền, không được xem bộ chọn người tham gia hiện tại là ranh giới bảo mật.
+
+### 11.5. Kiểm chứng lớp giao diện và bảo toàn CSDL
+
+Bên cạnh 52 kiểm thử Python/HTTP, 8 kiểm thử JavaScript kiểm tra định dạng tiền vượt giới hạn số nguyên an toàn, nhập tiền tiếng Việt, ranh giới thời gian, thay bộ lọc khi có request cũ, cập nhật sau giao dịch và chuyển cửa sổ phiên. Kết quả được lưu ở `output/frontend-test-results.xml`. Các kiểm thử này chạy mã JavaScript độc lập; không được diễn giải thành kiểm thử trình duyệt đầu cuối.
+
+Đối chiếu trước/sau trong `output/bao-toan-csdl.json` cho thấy toàn bộ script SQL và bản dump cấu trúc schema auction không thay đổi, 8/8 bất biến đều đạt. Giao diện không yêu cầu đổi tên CSDL vận hành, chạy migration hay ghi lại dữ liệu mẫu.
 
 ## Tài liệu tham khảo
 

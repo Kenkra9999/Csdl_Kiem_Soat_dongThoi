@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#132b4d">
+  <meta name="description" content="Hệ thống đấu giá trực tuyến và kiểm soát trả giá đồng thời — Đề tài 19, Cơ sở dữ liệu nâng cao.">
+  <title>Đấu Giá Việt · Không gian đấu giá trực tuyến</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Đến nội dung chính</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#auctions" aria-label="Đấu Giá Việt — trang chủ">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="m10 5 12 12m-7-15 10 10M7 10l10 10M15 9l-5 5m8-2L8 22m-3 3h16"/></svg></span>
+        <span><strong>Đấu Giá Việt<span class="brand-dot">.</span></strong><small>CSDL nâng cao · Đề tài 19</small></span>
+      </a>
+      <nav class="main-nav" aria-label="Điều hướng chính">
+        <a href="#auctions" data-route="auctions">Phiên đấu giá</a>
+        <a href="#results" data-route="results">Kết quả</a>
+        <a href="#lab" data-route="lab">Kiểm soát đồng thời</a>
+      </nav>
+      <div class="connection" id="connection" role="status"><span class="status-dot"></span><span>Đang kết nối</span></div>
+    </div>
+  </header>
+  <main id="main" class="main-shell" tabindex="-1">
+    <section id="page-auctions" class="page" aria-labelledby="gallery-title">
+      <div class="page-heading"><div><p class="eyebrow">KHÔNG GIAN ĐẤU GIÁ TRỰC TUYẾN</p><h1 id="gallery-title">Giá trị thật. Mỗi lượt trả giá.</h1><p class="page-intro">Khám phá tài sản, theo dõi phiên và tham gia trả giá theo thời gian thực.</p></div><span class="academic-label">Dữ liệu mô phỏng<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7l9 4 9-4-9-4ZM6 9v6c4 3 8 3 12 0V9M21 8v7"/></svg></span></div>
+      <div class="overview-strip" id="overview" aria-label="Tổng quan hệ thống"><div><strong>—</strong><span>phiên đấu giá</span></div><div><strong>—</strong><span>đang diễn ra</span></div><div><strong>—</strong><span>lượt trả giá</span></div><p><span class="live-wave" aria-hidden="true"></span>Cập nhật trực tiếp từ PostgreSQL</p></div>
+      <section class="feature-banner" aria-label="Giới thiệu quy trình đấu giá">
+        <div class="feature-copy"><span class="outline-label">MINH BẠCH TỪNG GIAO DỊCH</span><h2>Một phiên đấu giá.<br>Một kết quả chính xác.</h2><p>Mọi lượt trả giá được kiểm tra và ghi nhận nguyên tử. Cùng theo dõi một cuộc đấu giá công bằng.</p><a class="feature-link" href="#lab">Khám phá cơ chế đồng thời <span aria-hidden="true">↗</span></a></div>
+        <div class="feature-art" aria-hidden="true"><img src="/assets/artwork.svg" alt=""><div class="art-caption"><span>Bộ sưu tập tuyển chọn</span><strong>Nghệ thuật & dấu ấn thời gian</strong></div></div>
+      </section>
+      <section class="collection-section" aria-label="Danh sách phiên đấu giá">
+        <div class="section-heading"><div><p class="eyebrow">KHÁM PHÁ BỘ SƯU TẬP</p><h2>Các phiên đấu giá</h2></div><span id="result-count" class="muted">Đang tải dữ liệu…</span></div>
+        <div class="filter-bar">
+          <div class="status-tabs" role="group" aria-label="Lọc theo trạng thái"><button class="active" data-state="ALL" type="button">Tất cả</button><button data-state="LIVE" type="button">Đang diễn ra</button><button data-state="UPCOMING" type="button">Sắp mở</button><button data-state="ENDED" type="button">Chờ chốt</button><button data-state="CLOSED" type="button">Đã kết thúc</button></div>
+          <div class="filter-controls"><label class="search-field"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.5"/><path d="m16 16 4.5 4.5"/></svg><input id="search-input" type="search" placeholder="Tìm tài sản hoặc phiên…" aria-label="Tìm kiếm tài sản"></label><select id="kind-filter" aria-label="Lọc theo loại tài sản"><option value="ALL">Mọi loại tài sản</option><option value="ARTWORK">Nghệ thuật</option><option value="COLLECTIBLE">Đồ sưu tầm</option><option value="ELECTRONIC">Thiết bị điện tử</option></select><select id="sort-filter" aria-label="Sắp xếp phiên"><option value="ending">Sắp kết thúc</option><option value="newest">Mới nhất</option><option value="price">Theo mức giá</option></select></div>
+        </div>
+        <div id="auction-grid" class="auction-grid" aria-live="polite" aria-busy="true"></div>
+      </section>
+    </section>
+    <section id="page-results" class="page" hidden aria-labelledby="results-title"><div class="page-heading"><div><p class="eyebrow">KẾT QUẢ ĐẤU GIÁ</p><h1 id="results-title">Khép lại phiên. Ghi nhận giá trị.</h1><p class="page-intro">Kết quả được chốt từ lịch sử trả giá, duy nhất cho mỗi phiên.</p></div><button class="button button-light" id="refresh-results" type="button">Làm mới kết quả</button></div><div id="results-summary" class="results-summary"></div><div id="results-list" class="results-list" aria-live="polite"></div></section>
+    <section id="page-lab" class="page" hidden aria-labelledby="lab-title"><div class="page-heading"><div><p class="eyebrow">PHÒNG THỰC NGHIỆM</p><h1 id="lab-title">Đúng dữ liệu. Vững kết quả.</h1><p class="page-intro">Quan sát hai cơ chế kiểm soát đồng thời bằng giao dịch PostgreSQL thực tế.</p></div><span class="academic-label">Đề tài 19 · PostgreSQL 18</span></div><div class="lab-layout"><section class="experiment-panel"><div class="panel-label"><span class="step-number">01</span><span>CẠNH TRANH CÙNG MỨC GIÁ</span></div><h2>Nhiều người trả giá.<br>Ai sẽ được ghi nhận?</h2><p class="muted">Các người tham gia gửi cùng một mức giá trong cùng thời điểm. Chỉ một lượt hợp lệ được chấp nhận.</p><form id="race-form"><label for="race-strategy">Cơ chế kiểm soát</label><select id="race-strategy"><option value="row_lock">Khóa dòng · READ COMMITTED</option><option value="serializable">SERIALIZABLE · Có thử lại</option></select><label for="race-workers">Số người tham gia cùng lúc <strong id="worker-value">8 người</strong></label><input id="race-workers" type="range" min="2" max="12" step="1" value="8"><div class="range-labels"><span>2 người</span><span>12 người</span></div><button class="button button-primary full-width" id="run-race" type="submit">Chạy thực nghiệm <span aria-hidden="true">↗</span></button></form><p class="small-note">Chạy trên CSDL kiểm thử riêng. Dữ liệu các phiên đang sử dụng được giữ riêng.</p><div id="race-result" aria-live="polite"></div></section><div class="lab-right"><section class="integrity-section"><div class="section-heading"><div><p class="eyebrow">TÍNH NHẤT QUÁN CỦA HỆ THỐNG</p><h2>Kiểm chứng dữ liệu</h2></div><button class="icon-button" id="refresh-checks" type="button" aria-label="Kiểm tra lại dữ liệu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7v5h-5M4 17v-5h5M5.7 7a7 7 0 0 1 11.5-1L20 9M4 15l2.8 3A7 7 0 0 0 18.3 17"/></svg></button></div><div id="integrity-summary"></div><div id="checks-list" class="checks-list"></div><p id="checked-time" class="small-note"></p></section><section class="measured-section"><div class="section-heading"><div><p class="eyebrow">MINH CHỨNG TỪ LẦN CHẠY ĐÃ LƯU</p><h2>Kết quả thực nghiệm</h2></div></div><div id="test-summary"></div><div id="benchmark-comparison"></div><p id="measurement-note" class="small-note"></p></section></div></div><section class="protocol-explainer"><div><span class="protocol-index">A</span><h3>Khóa dòng</h3><p>Khóa phiên trước khi kiểm tra giá. Các yêu cầu cạnh tranh chờ và đọc lại trạng thái mới.</p><code>SELECT … FOR UPDATE</code></div><div><span class="protocol-index">B</span><h3>SERIALIZABLE</h3><p>Phát hiện lịch giao dịch xung đột và chạy lại toàn bộ giao dịch với cùng mã yêu cầu.</p><code>SQLSTATE 40001 · retry</code></div><div><span class="protocol-index">✓</span><h3>Cùng một nguyên tắc</h3><p>Lượt trả giá, giá hiện tại và nhật ký cùng commit. Một phiên có tối đa một kết quả thắng.</p><code>Atomicity · Idempotency</code></div></section></section>
+  </main>
+  <footer class="site-footer"><div><strong>Đấu Giá Việt<span>.</span></strong><p>Hệ thống đấu giá trực tuyến & kiểm soát trả giá đồng thời.</p></div><span>Đồ án Cơ sở dữ liệu nâng cao<br>Đề tài 19 · Dữ liệu giả lập</span></footer>
+  <dialog id="auction-dialog" class="auction-dialog" aria-labelledby="detail-title"><div class="dialog-top"><span id="detail-eyebrow" class="eyebrow">CHI TIẾT PHIÊN ĐẤU GIÁ</span><button id="close-dialog" class="icon-button" aria-label="Đóng chi tiết phiên" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div><div id="detail-content"></div></dialog>
+  <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="false"></div>
+</body>
+</html>

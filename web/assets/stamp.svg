@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" role="img" aria-labelledby="title desc">
+  <title id="title">Tem bưu chính sưu tầm với họa tiết hoa sen</title>
+  <desc id="desc">Minh họa một con tem màu xanh rêu, hoa sen khắc nét và phong bì giấy cũ trên nền màu kem.</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop offset="0" stop-color="#ede7dc"/><stop offset="1" stop-color="#d7cbbb"/></linearGradient>
+    <linearGradient id="paper" x2="1" y2="1"><stop offset="0" stop-color="#faf1d9"/><stop offset="1" stop-color="#d8c5a1"/></linearGradient>
+    <linearGradient id="green" x2="1" y2="1"><stop offset="0" stop-color="#789380"/><stop offset="1" stop-color="#3c6054"/></linearGradient>
+    <filter id="shadow" x="-40%" y="-30%" width="180%" height="180%"><feDropShadow dx="7" dy="16" stdDeviation="12" flood-color="#5d4c35" flood-opacity=".23"/></filter>
+    <mask id="perforation"><rect x="232" y="71" width="336" height="440" fill="white"/><g fill="black"><path d="M232 71h336" stroke="black" stroke-width="12" stroke-dasharray="1 17" stroke-linecap="round"/><path d="M232 511h336" stroke="black" stroke-width="12" stroke-dasharray="1 17" stroke-linecap="round"/><path d="M232 71v440" stroke="black" stroke-width="12" stroke-dasharray="1 17" stroke-linecap="round"/><path d="M568 71v440" stroke="black" stroke-width="12" stroke-dasharray="1 17" stroke-linecap="round"/></g></mask>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <g transform="rotate(10 400 350)" filter="url(#shadow)"><rect x="121" y="230" width="552" height="273" rx="3" fill="#d8c7a8"/><path d="m123 233 276 168 271-168" fill="#e4d5b9" stroke="#bba98b"/><path d="m121 501 195-142m357 144-196-142" stroke="#c0af91" fill="none"/></g>
+  <g transform="rotate(-9 400 290)" filter="url(#shadow)">
+    <rect x="232" y="71" width="336" height="440" fill="url(#paper)" mask="url(#perforation)"/>
+    <rect x="252" y="92" width="296" height="398" fill="url(#green)"/>
+    <rect x="261" y="101" width="278" height="380" fill="none" stroke="#e9dfba" stroke-width="2"/>
+    <rect x="269" y="109" width="262" height="364" fill="none" stroke="#dae0bb" stroke-width=".7"/>
+    <g fill="none" stroke="#e7dfb7" stroke-width="2">
+      <path d="M407 421c-10-74-6-111 6-152m-11 113c-26-41-65-60-90-60 25 46 55 66 90 60zm1-22c29-37 58-53 85-53-22 42-51 61-85 53z"/>
+      <path d="M405 302c-57-5-88-31-95-73 38 7 69 30 95 73zm0 0c58-9 87-36 88-79-38 11-67 35-88 79z"/>
+      <path d="M405 302c-49-28-68-65-53-107 29 24 47 60 53 107zm0 0c45-30 59-67 41-108-26 26-40 62-41 108z"/>
+      <path d="M405 294c-29-39-32-77-8-116 26 37 29 76 8 116z"/>
+      <path d="M317 233c31 14 59 37 85 65m84-68c-33 16-58 38-78 67m-52-94c26 34 41 64 47 95m38-95c-22 35-31 64-34 95M399 190l6 102" stroke-width=".8" opacity=".7"/>
+      <path d="M304 422c61-12 122-13 185-3m-173 15c57-7 110-6 161 0" stroke-width="1" opacity=".6"/>
+    </g>
+    <g fill="#e7dfb7"><path d="M292 131h68v5h-68zm0 10h44v3h-44zm165 0h50v3h-50zm26-10h24v5h-24z" opacity=".8"/><path d="M291 452h31v6h-31zm42 0h60v6h-60zm132 0h42v6h-42z" opacity=".65"/></g>
+    <g stroke="#293f36" stroke-width="2" fill="none" opacity=".5"><circle cx="511" cy="155" r="38"/><circle cx="511" cy="155" r="30"/><path d="m470 171 81-36m-86 45 87-37m-85 46 88-39"/></g>
+  </g>
+</svg>

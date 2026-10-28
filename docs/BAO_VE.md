@@ -1,5 +1,7 @@
 # Kịch bản trình bày và giải thích đồ án
 
+Có thể mở `MO_HE_THONG.cmd` để trình bày trên giao diện Đấu Giá Việt. Giữ pgAdmin bên cạnh để đối chiếu dữ liệu và `verify_invariants()`. Nếu muốn chạy bằng dòng lệnh, dùng `CONG_CU_KIEM_THU.cmd` hoặc các lệnh `scenario` bên dưới. Cấu trúc và quy tắc CSDL giống nhau ở cả hai cách thao tác.
+
 ## 1. Trình bày khoảng 10-15 phút
 
 ### Phút 0-2: vấn đề và quy tắc
@@ -20,10 +22,10 @@ Mở mục 4 của báo cáo. Minh họa quan hệ rộng lặp lại tên ngư�
 
 Cache max không tự đúng vì BCNF; đây là dữ liệu lặp xuyên bảng được giữ nhất quán bằng transaction và kiểm tra cuối giao dịch.
 
-### Phút 6-9: demo trả giá và đóng phiên
+### Phút 6-9: trình diễn trả giá và đóng phiên
 
 ```powershell
-.\.venv\Scripts\python.exe -m auction_lab demo --strategy row_lock
+.\.venv\Scripts\python.exe -m auction_lab scenario --strategy row_lock
 ```
 
 Đọc các bước theo JSON: nhận lượt đầu, replay cùng UUID, hai người cùng trả một mức chỉ một được nhận, đóng sớm bị từ chối, đóng đúng hạn, đóng lại trả kết quả cũ. Mỗi lần chạy tạo phiên mới nên có thể thực hiện lại.

@@ -1,187 +1,272 @@
 {
-  "measured_at_utc": "2026-10-27T15:03:26.167807+00:00",
+  "measured_at_utc": "2026-10-28T00:35:53.057242+00:00",
   "passed": true,
-  "tests_run": 35,
+  "tests_run": 52,
   "failures": 0,
   "errors": 0,
   "skipped": 0,
-  "elapsed_ms": 17033.81,
+  "elapsed_ms": 22181.897,
   "tests": [
     {
       "test": "tests.test_auction.AuctionIntegrationTests.test_01_first_bid_and_price_step",
       "status": "PASSED",
-      "duration_ms": 390.194
+      "duration_ms": 612.604
     },
     {
       "test": "tests.test_auction.AuctionIntegrationTests.test_02_replay_same_uuid_does_not_duplicate",
       "status": "PASSED",
-      "duration_ms": 429.517
+      "duration_ms": 257.416
     },
     {
       "test": "tests.test_auction.AuctionIntegrationTests.test_03_uuid_payload_conflict",
       "status": "PASSED",
-      "duration_ms": 265.012
+      "duration_ms": 336.531
     },
     {
       "test": "tests.test_auction.AuctionIntegrationTests.test_04_replay_after_close",
       "status": "PASSED",
-      "duration_ms": 553.502
+      "duration_ms": 246.461
     },
     {
       "test": "tests.test_auction.AuctionIntegrationTests.test_05_seller_cannot_bid",
       "status": "PASSED",
-      "duration_ms": 81.792
+      "duration_ms": 87.618
     },
     {
       "test": "tests.test_auction.AuctionIntegrationTests.test_06_unregistered_cannot_bid",
       "status": "PASSED",
-      "duration_ms": 112.154
+      "duration_ms": 109.06
     },
     {
       "test": "tests.test_auction.AuctionIntegrationTests.test_07_not_started_and_ended",
       "status": "PASSED",
-      "duration_ms": 550.553
+      "duration_ms": 243.492
     },
     {
       "test": "tests.test_auction.AuctionIntegrationTests.test_08_close_too_early",
       "status": "PASSED",
-      "duration_ms": 91.106
+      "duration_ms": 175.127
     },
     {
       "test": "tests.test_auction.AuctionIntegrationTests.test_09_close_without_bids_and_repeat",
       "status": "PASSED",
-      "duration_ms": 433.603
+      "duration_ms": 182.19
     },
     {
       "test": "tests.test_auction.AuctionIntegrationTests.test_10_concurrent_equal_price_one_acceptance",
       "status": "PASSED",
-      "duration_ms": 447.843
+      "duration_ms": 801.53
     },
     {
       "test": "tests.test_auction.AuctionIntegrationTests.test_11_concurrent_duplicate_request",
       "status": "PASSED",
-      "duration_ms": 524.519
+      "duration_ms": 759.14
     },
     {
       "test": "tests.test_auction.AuctionIntegrationTests.test_12_concurrent_cross_auction_uuid_conflict",
       "status": "PASSED",
-      "duration_ms": 1122.634
+      "duration_ms": 723.505
     },
     {
       "test": "tests.test_auction.AuctionIntegrationTests.test_13_bid_close_race_and_unique_winner",
       "status": "PASSED",
-      "duration_ms": 1081.511
+      "duration_ms": 978.169
     },
     {
       "test": "tests.test_auction.AuctionIntegrationTests.test_14_lock_wait_crosses_deadline",
       "status": "PASSED",
-      "duration_ms": 1606.866
+      "duration_ms": 1561.534
     },
     {
       "test": "tests.test_auction.AuctionIntegrationTests.test_15_fault_after_insert_rolls_back_everything",
       "status": "PASSED",
-      "duration_ms": 605.328
+      "duration_ms": 277.834
     },
     {
       "test": "tests.test_auction.AuctionIntegrationTests.test_16_serializable_requires_correct_isolation",
       "status": "PASSED",
-      "duration_ms": 186.279
+      "duration_ms": 200.953
     },
     {
       "test": "tests.test_auction.AuctionIntegrationTests.test_17_real_serialization_failure_retries_whole_transaction",
       "status": "PASSED",
-      "duration_ms": 193.419
+      "duration_ms": 299.69
     },
     {
       "test": "tests.test_auction.AuctionIntegrationTests.test_18_dynamic_report_filters",
       "status": "PASSED",
-      "duration_ms": 211.914
+      "duration_ms": 97.928
     },
     {
       "test": "tests.test_auction.AuctionIntegrationTests.test_19_invalid_amount",
       "status": "PASSED",
-      "duration_ms": 200.705
+      "duration_ms": 178.389
     },
     {
       "test": "tests.test_auction.AuctionIntegrationTests.test_20_missing_auction",
       "status": "PASSED",
-      "duration_ms": 208.743
+      "duration_ms": 195.882
     },
     {
       "test": "tests.test_auction.AuctionIntegrationTests.test_21_all_final_invariants",
       "status": "PASSED",
-      "duration_ms": 222.569
+      "duration_ms": 102.743
     },
     {
       "test": "tests.test_auction.AuctionIntegrationTests.test_22_category_cycle_is_rejected",
       "status": "PASSED",
-      "duration_ms": 118.233
+      "duration_ms": 99.361
     },
     {
       "test": "tests.test_auction.AuctionIntegrationTests.test_23_total_subtype_is_enforced_at_commit",
       "status": "PASSED",
-      "duration_ms": 209.423
+      "duration_ms": 104.215
     },
     {
       "test": "tests.test_auction.AuctionIntegrationTests.test_24_disjoint_subtype_is_enforced",
       "status": "PASSED",
-      "duration_ms": 197.105
+      "duration_ms": 107.987
     },
     {
       "test": "tests.test_auction.AuctionIntegrationTests.test_25_history_is_immutable",
       "status": "PASSED",
-      "duration_ms": 392.77
+      "duration_ms": 315.196
     },
     {
       "test": "tests.test_auction.AuctionIntegrationTests.test_26_app_role_cannot_bypass_functions",
       "status": "PASSED",
-      "duration_ms": 311.238
+      "duration_ms": 581.515
     },
     {
       "test": "tests.test_auction.AuctionIntegrationTests.test_27_business_rejection_is_not_cached",
       "status": "PASSED",
-      "duration_ms": 345.117
+      "duration_ms": 328.498
     },
     {
       "test": "tests.test_auction.AuctionIntegrationTests.test_28_mixed_protocols_still_one_equal_price_winner",
       "status": "PASSED",
-      "duration_ms": 323.108
+      "duration_ms": 366.017
     },
     {
       "test": "tests.test_auction.AuctionIntegrationTests.test_29_nonfinite_and_fractional_cents_rejected",
       "status": "PASSED",
-      "duration_ms": 441.292
+      "duration_ms": 502.02
     },
     {
       "test": "tests.test_auction.AuctionIntegrationTests.test_30_subtype_primary_key_move_cannot_orphan_old_asset",
       "status": "PASSED",
-      "duration_ms": 88.608
+      "duration_ms": 202.481
     },
     {
       "test": "tests.test_auction.AuctionIntegrationTests.test_31_category_edit_rejects_repeatable_read_snapshot",
       "status": "PASSED",
-      "duration_ms": 186.083
+      "duration_ms": 93.205
     },
     {
       "test": "tests.test_auction.AuctionIntegrationTests.test_32_close_waits_for_predeadline_uncommitted_bid",
       "status": "PASSED",
-      "duration_ms": 4726.619
+      "duration_ms": 4997.7
     },
     {
       "test": "tests.test_auction.PurePythonTests.test_disposable_guard_accepts_test_suffix",
       "status": "PASSED",
-      "duration_ms": 0.177
+      "duration_ms": 0.363
     },
     {
       "test": "tests.test_auction.PurePythonTests.test_disposable_guard_protects_demo",
       "status": "PASSED",
-      "duration_ms": 0.118
+      "duration_ms": 0.277
     },
     {
       "test": "tests.test_auction.PurePythonTests.test_object_queries",
       "status": "PASSED",
-      "duration_ms": 0.075
+      "duration_ms": 0.48
+    },
+    {
+      "test": "tests.test_web.WebIntegrationTests.test_01_health_and_static_headers",
+      "status": "PASSED",
+      "duration_ms": 433.936
+    },
+    {
+      "test": "tests.test_web.WebIntegrationTests.test_02_bootstrap_has_actual_summary_and_token",
+      "status": "PASSED",
+      "duration_ms": 150.381
+    },
+    {
+      "test": "tests.test_web.WebIntegrationTests.test_03_list_filters_search_and_unknown_sort",
+      "status": "PASSED",
+      "duration_ms": 370.191
+    },
+    {
+      "test": "tests.test_web.WebIntegrationTests.test_04_detail_counts_do_not_multiply",
+      "status": "PASSED",
+      "duration_ms": 193.84
+    },
+    {
+      "test": "tests.test_web.WebIntegrationTests.test_05_missing_and_invalid_ids",
+      "status": "PASSED",
+      "duration_ms": 198.928
+    },
+    {
+      "test": "tests.test_web.WebIntegrationTests.test_06_bid_replay_and_payload_conflict_use_existing_function",
+      "status": "PASSED",
+      "duration_ms": 296.996
+    },
+    {
+      "test": "tests.test_web.WebIntegrationTests.test_07_business_rejection_is_not_http_server_failure",
+      "status": "PASSED",
+      "duration_ms": 286.955
+    },
+    {
+      "test": "tests.test_web.WebIntegrationTests.test_08_close_early_then_closed_and_replayed",
+      "status": "PASSED",
+      "duration_ms": 246.396
+    },
+    {
+      "test": "tests.test_web.WebIntegrationTests.test_09_csrf_missing_invalid_and_cross_origin_are_rejected",
+      "status": "PASSED",
+      "duration_ms": 91.121
+    },
+    {
+      "test": "tests.test_web.WebIntegrationTests.test_10_json_validation_and_body_limit",
+      "status": "PASSED",
+      "duration_ms": 105.04
+    },
+    {
+      "test": "tests.test_web.WebIntegrationTests.test_11_static_traversal_and_private_file_denied",
+      "status": "PASSED",
+      "duration_ms": 59.328
+    },
+    {
+      "test": "tests.test_web.WebIntegrationTests.test_12_money_above_javascript_safe_integer_stays_string",
+      "status": "PASSED",
+      "duration_ms": 558.518
+    },
+    {
+      "test": "tests.test_web.WebIntegrationTests.test_13_real_equal_price_experiments_both_protocols",
+      "status": "PASSED",
+      "duration_ms": 982.307
+    },
+    {
+      "test": "tests.test_web.WebIntegrationTests.test_14_experiment_guard_and_busy_state",
+      "status": "PASSED",
+      "duration_ms": 65.179
+    },
+    {
+      "test": "tests.test_web.WebIntegrationTests.test_15_checks_and_saved_metrics_are_real",
+      "status": "PASSED",
+      "duration_ms": 324.593
+    },
+    {
+      "test": "tests.test_web.WebIntegrationTests.test_16_serializable_http_path",
+      "status": "PASSED",
+      "duration_ms": 224.237
+    },
+    {
+      "test": "tests.test_web.WebIntegrationTests.test_17_owned_server_can_stop_without_database_connection",
+      "status": "PASSED",
+      "duration_ms": 670.677
     }
   ],
-  "runner_output": "test_01_first_bid_and_price_step (tests.test_auction.AuctionIntegrationTests.test_01_first_bid_and_price_step) ... ok\ntest_02_replay_same_uuid_does_not_duplicate (tests.test_auction.AuctionIntegrationTests.test_02_replay_same_uuid_does_not_duplicate) ... ok\ntest_03_uuid_payload_conflict (tests.test_auction.AuctionIntegrationTests.test_03_uuid_payload_conflict) ... ok\ntest_04_replay_after_close (tests.test_auction.AuctionIntegrationTests.test_04_replay_after_close) ... ok\ntest_05_seller_cannot_bid (tests.test_auction.AuctionIntegrationTests.test_05_seller_cannot_bid) ... ok\ntest_06_unregistered_cannot_bid (tests.test_auction.AuctionIntegrationTests.test_06_unregistered_cannot_bid) ... ok\ntest_07_not_started_and_ended (tests.test_auction.AuctionIntegrationTests.test_07_not_started_and_ended) ... ok\ntest_08_close_too_early (tests.test_auction.AuctionIntegrationTests.test_08_close_too_early) ... ok\ntest_09_close_without_bids_and_repeat (tests.test_auction.AuctionIntegrationTests.test_09_close_without_bids_and_repeat) ... ok\ntest_10_concurrent_equal_price_one_acceptance (tests.test_auction.AuctionIntegrationTests.test_10_concurrent_equal_price_one_acceptance) ... ok\ntest_11_concurrent_duplicate_request (tests.test_auction.AuctionIntegrationTests.test_11_concurrent_duplicate_request) ... ok\ntest_12_concurrent_cross_auction_uuid_conflict (tests.test_auction.AuctionIntegrationTests.test_12_concurrent_cross_auction_uuid_conflict) ... ok\ntest_13_bid_close_race_and_unique_winner (tests.test_auction.AuctionIntegrationTests.test_13_bid_close_race_and_unique_winner) ... ok\ntest_14_lock_wait_crosses_deadline (tests.test_auction.AuctionIntegrationTests.test_14_lock_wait_crosses_deadline) ... ok\ntest_15_fault_after_insert_rolls_back_everything (tests.test_auction.AuctionIntegrationTests.test_15_fault_after_insert_rolls_back_everything) ... ok\ntest_16_serializable_requires_correct_isolation (tests.test_auction.AuctionIntegrationTests.test_16_serializable_requires_correct_isolation) ... ok\ntest_17_real_serialization_failure_retries_whole_transaction (tests.test_auction.AuctionIntegrationTests.test_17_real_serialization_failure_retries_whole_transaction) ... ok\ntest_18_dynamic_report_filters (tests.test_auction.AuctionIntegrationTests.test_18_dynamic_report_filters) ... ok\ntest_19_invalid_amount (tests.test_auction.AuctionIntegrationTests.test_19_invalid_amount) ... ok\ntest_20_missing_auction (tests.test_auction.AuctionIntegrationTests.test_20_missing_auction) ... ok\ntest_21_all_final_invariants (tests.test_auction.AuctionIntegrationTests.test_21_all_final_invariants) ... ok\ntest_22_category_cycle_is_rejected (tests.test_auction.AuctionIntegrationTests.test_22_category_cycle_is_rejected) ... ok\ntest_23_total_subtype_is_enforced_at_commit (tests.test_auction.AuctionIntegrationTests.test_23_total_subtype_is_enforced_at_commit) ... ok\ntest_24_disjoint_subtype_is_enforced (tests.test_auction.AuctionIntegrationTests.test_24_disjoint_subtype_is_enforced) ... ok\ntest_25_history_is_immutable (tests.test_auction.AuctionIntegrationTests.test_25_history_is_immutable) ... ok\ntest_26_app_role_cannot_bypass_functions (tests.test_auction.AuctionIntegrationTests.test_26_app_role_cannot_bypass_functions) ... ok\ntest_27_business_rejection_is_not_cached (tests.test_auction.AuctionIntegrationTests.test_27_business_rejection_is_not_cached) ... ok\ntest_28_mixed_protocols_still_one_equal_price_winner (tests.test_auction.AuctionIntegrationTests.test_28_mixed_protocols_still_one_equal_price_winner) ... ok\ntest_29_nonfinite_and_fractional_cents_rejected (tests.test_auction.AuctionIntegrationTests.test_29_nonfinite_and_fractional_cents_rejected) ... ok\ntest_30_subtype_primary_key_move_cannot_orphan_old_asset (tests.test_auction.AuctionIntegrationTests.test_30_subtype_primary_key_move_cannot_orphan_old_asset) ... ok\ntest_31_category_edit_rejects_repeatable_read_snapshot (tests.test_auction.AuctionIntegrationTests.test_31_category_edit_rejects_repeatable_read_snapshot) ... ok\ntest_32_close_waits_for_predeadline_uncommitted_bid (tests.test_auction.AuctionIntegrationTests.test_32_close_waits_for_predeadline_uncommitted_bid)\nA valid bid holding the write right wins even if COMMIT follows cutoff. ... ok\ntest_disposable_guard_accepts_test_suffix (tests.test_auction.PurePythonTests.test_disposable_guard_accepts_test_suffix) ... ok\ntest_disposable_guard_protects_demo (tests.test_auction.PurePythonTests.test_disposable_guard_protects_demo) ... ok\ntest_object_queries (tests.test_auction.PurePythonTests.test_object_queries) ... ok\n\n----------------------------------------------------------------------\nRan 35 tests in 17.034s\n\nOK\n"
+  "runner_output": "test_01_first_bid_and_price_step (tests.test_auction.AuctionIntegrationTests.test_01_first_bid_and_price_step) ... ok\ntest_02_replay_same_uuid_does_not_duplicate (tests.test_auction.AuctionIntegrationTests.test_02_replay_same_uuid_does_not_duplicate) ... ok\ntest_03_uuid_payload_conflict (tests.test_auction.AuctionIntegrationTests.test_03_uuid_payload_conflict) ... ok\ntest_04_replay_after_close (tests.test_auction.AuctionIntegrationTests.test_04_replay_after_close) ... ok\ntest_05_seller_cannot_bid (tests.test_auction.AuctionIntegrationTests.test_05_seller_cannot_bid) ... ok\ntest_06_unregistered_cannot_bid (tests.test_auction.AuctionIntegrationTests.test_06_unregistered_cannot_bid) ... ok\ntest_07_not_started_and_ended (tests.test_auction.AuctionIntegrationTests.test_07_not_started_and_ended) ... ok\ntest_08_close_too_early (tests.test_auction.AuctionIntegrationTests.test_08_close_too_early) ... ok\ntest_09_close_without_bids_and_repeat (tests.test_auction.AuctionIntegrationTests.test_09_close_without_bids_and_repeat) ... ok\ntest_10_concurrent_equal_price_one_acceptance (tests.test_auction.AuctionIntegrationTests.test_10_concurrent_equal_price_one_acceptance) ... ok\ntest_11_concurrent_duplicate_request (tests.test_auction.AuctionIntegrationTests.test_11_concurrent_duplicate_request) ... ok\ntest_12_concurrent_cross_auction_uuid_conflict (tests.test_auction.AuctionIntegrationTests.test_12_concurrent_cross_auction_uuid_conflict) ... ok\ntest_13_bid_close_race_and_unique_winner (tests.test_auction.AuctionIntegrationTests.test_13_bid_close_race_and_unique_winner) ... ok\ntest_14_lock_wait_crosses_deadline (tests.test_auction.AuctionIntegrationTests.test_14_lock_wait_crosses_deadline) ... ok\ntest_15_fault_after_insert_rolls_back_everything (tests.test_auction.AuctionIntegrationTests.test_15_fault_after_insert_rolls_back_everything) ... ok\ntest_16_serializable_requires_correct_isolation (tests.test_auction.AuctionIntegrationTests.test_16_serializable_requires_correct_isolation) ... ok\ntest_17_real_serialization_failure_retries_whole_transaction (tests.test_auction.AuctionIntegrationTests.test_17_real_serialization_failure_retries_whole_transaction) ... ok\ntest_18_dynamic_report_filters (tests.test_auction.AuctionIntegrationTests.test_18_dynamic_report_filters) ... ok\ntest_19_invalid_amount (tests.test_auction.AuctionIntegrationTests.test_19_invalid_amount) ... ok\ntest_20_missing_auction (tests.test_auction.AuctionIntegrationTests.test_20_missing_auction) ... ok\ntest_21_all_final_invariants (tests.test_auction.AuctionIntegrationTests.test_21_all_final_invariants) ... ok\ntest_22_category_cycle_is_rejected (tests.test_auction.AuctionIntegrationTests.test_22_category_cycle_is_rejected) ... ok\ntest_23_total_subtype_is_enforced_at_commit (tests.test_auction.AuctionIntegrationTests.test_23_total_subtype_is_enforced_at_commit) ... ok\ntest_24_disjoint_subtype_is_enforced (tests.test_auction.AuctionIntegrationTests.test_24_disjoint_subtype_is_enforced) ... ok\ntest_25_history_is_immutable (tests.test_auction.AuctionIntegrationTests.test_25_history_is_immutable) ... ok\ntest_26_app_role_cannot_bypass_functions (tests.test_auction.AuctionIntegrationTests.test_26_app_role_cannot_bypass_functions) ... ok\ntest_27_business_rejection_is_not_cached (tests.test_auction.AuctionIntegrationTests.test_27_business_rejection_is_not_cached) ... ok\ntest_28_mixed_protocols_still_one_equal_price_winner (tests.test_auction.AuctionIntegrationTests.test_28_mixed_protocols_still_one_equal_price_winner) ... ok\ntest_29_nonfinite_and_fractional_cents_rejected (tests.test_auction.AuctionIntegrationTests.test_29_nonfinite_and_fractional_cents_rejected) ... ok\ntest_30_subtype_primary_key_move_cannot_orphan_old_asset (tests.test_auction.AuctionIntegrationTests.test_30_subtype_primary_key_move_cannot_orphan_old_asset) ... ok\ntest_31_category_edit_rejects_repeatable_read_snapshot (tests.test_auction.AuctionIntegrationTests.test_31_category_edit_rejects_repeatable_read_snapshot) ... ok\ntest_32_close_waits_for_predeadline_uncommitted_bid (tests.test_auction.AuctionIntegrationTests.test_32_close_waits_for_predeadline_uncommitted_bid)\nA valid bid holding the write right wins even if COMMIT follows cutoff. ... ok\ntest_disposable_guard_accepts_test_suffix (tests.test_auction.PurePythonTests.test_disposable_guard_accepts_test_suffix) ... ok\ntest_disposable_guard_protects_demo (tests.test_auction.PurePythonTests.test_disposable_guard_protects_demo) ... ok\ntest_object_queries (tests.test_auction.PurePythonTests.test_object_queries) ... ok\ntest_01_health_and_static_headers (tests.test_web.WebIntegrationTests.test_01_health_and_static_headers) ... ok\ntest_02_bootstrap_has_actual_summary_and_token (tests.test_web.WebIntegrationTests.test_02_bootstrap_has_actual_summary_and_token) ... ok\ntest_03_list_filters_search_and_unknown_sort (tests.test_web.WebIntegrationTests.test_03_list_filters_search_and_unknown_sort) ... ok\ntest_04_detail_counts_do_not_multiply (tests.test_web.WebIntegrationTests.test_04_detail_counts_do_not_multiply) ... ok\ntest_05_missing_and_invalid_ids (tests.test_web.WebIntegrationTests.test_05_missing_and_invalid_ids) ... ok\ntest_06_bid_replay_and_payload_conflict_use_existing_function (tests.test_web.WebIntegrationTests.test_06_bid_replay_and_payload_conflict_use_existing_function) ... ok\ntest_07_business_rejection_is_not_http_server_failure (tests.test_web.WebIntegrationTests.test_07_business_rejection_is_not_http_server_failure) ... ok\ntest_08_close_early_then_closed_and_replayed (tests.test_web.WebIntegrationTests.test_08_close_early_then_closed_and_replayed) ... ok\ntest_09_csrf_missing_invalid_and_cross_origin_are_rejected (tests.test_web.WebIntegrationTests.test_09_csrf_missing_invalid_and_cross_origin_are_rejected) ... ok\ntest_10_json_validation_and_body_limit (tests.test_web.WebIntegrationTests.test_10_json_validation_and_body_limit) ... ok\ntest_11_static_traversal_and_private_file_denied (tests.test_web.WebIntegrationTests.test_11_static_traversal_and_private_file_denied) ... ok\ntest_12_money_above_javascript_safe_integer_stays_string (tests.test_web.WebIntegrationTests.test_12_money_above_javascript_safe_integer_stays_string) ... ok\ntest_13_real_equal_price_experiments_both_protocols (tests.test_web.WebIntegrationTests.test_13_real_equal_price_experiments_both_protocols) ... ok\ntest_14_experiment_guard_and_busy_state (tests.test_web.WebIntegrationTests.test_14_experiment_guard_and_busy_state) ... ok\ntest_15_checks_and_saved_metrics_are_real (tests.test_web.WebIntegrationTests.test_15_checks_and_saved_metrics_are_real) ... ok\ntest_16_serializable_http_path (tests.test_web.WebIntegrationTests.test_16_serializable_http_path) ... ok\ntest_17_owned_server_can_stop_without_database_connection (tests.test_web.WebIntegrationTests.test_17_owned_server_can_stop_without_database_connection) ... ok\n\n----------------------------------------------------------------------\nRan 52 tests in 22.182s\n\nOK\n"
 }

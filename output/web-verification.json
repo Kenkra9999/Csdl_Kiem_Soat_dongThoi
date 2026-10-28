@@ -1,0 +1,69 @@
+{
+  "checked_at_utc": "2026-10-28T00:38:29.128037+00:00",
+  "http_resources": [
+    {
+      "path": "/",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/styles.css",
+      "status": 200,
+      "content_type": "text/css; charset=utf-8"
+    },
+    {
+      "path": "/app.js",
+      "status": 200,
+      "content_type": "text/javascript; charset=utf-8"
+    },
+    {
+      "path": "/assets/artwork.svg",
+      "status": 200,
+      "content_type": "image/svg+xml; charset=utf-8"
+    },
+    {
+      "path": "/assets/autumn.svg",
+      "status": 200,
+      "content_type": "image/svg+xml; charset=utf-8"
+    },
+    {
+      "path": "/assets/coins.svg",
+      "status": 200,
+      "content_type": "image/svg+xml; charset=utf-8"
+    },
+    {
+      "path": "/assets/stamp.svg",
+      "status": 200,
+      "content_type": "image/svg+xml; charset=utf-8"
+    },
+    {
+      "path": "/assets/camera.svg",
+      "status": 200,
+      "content_type": "image/svg+xml; charset=utf-8"
+    },
+    {
+      "path": "/assets/lens.svg",
+      "status": 200,
+      "content_type": "image/svg+xml; charset=utf-8"
+    },
+    {
+      "path": "/api/auctions",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8"
+    },
+    {
+      "path": "/api/checks",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8"
+    },
+    {
+      "path": "/api/experiments/latest",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8"
+    }
+  ],
+  "python_http_tests": 52,
+  "javascript_tests": 8,
+  "browser_visual_review": "not_completed: browser control stopped because current URL could not be verified",
+  "live_schema_unchanged": true
+}

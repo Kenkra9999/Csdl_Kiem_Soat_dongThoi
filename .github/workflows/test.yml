@@ -45,6 +45,7 @@ jobs:
           psql -h localhost -U postgres -v ON_ERROR_STOP=1 -c "CREATE DATABASE auction19_bench OWNER auction19_owner;"
       - run: python -m auction_lab setup
       - run: python -m auction_lab test
+      - run: node --test tests/frontend.test.cjs
       - run: python -m auction_lab verify
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always()
