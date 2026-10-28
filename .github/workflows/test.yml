@@ -45,6 +45,7 @@ jobs:
           psql -h localhost -U postgres -v ON_ERROR_STOP=1 -c "CREATE DATABASE auction19_bench OWNER auction19_owner;"
       - name: Validate Vietnamese BCNF DDL in an isolated CI database
         run: |
+          set -euo pipefail
           mkdir -p output/buoc_05
           psql -h localhost -U postgres -d postgres -v ON_ERROR_STOP=1 -f sql/buoc_05/00_tao_database.sql
           psql -h localhost -U postgres -d dau_gia_19_bcnf -v ON_ERROR_STOP=1 -f sql/buoc_05/01_tao_bang.sql

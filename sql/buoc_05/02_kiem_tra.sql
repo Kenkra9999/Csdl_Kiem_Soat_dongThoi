@@ -1,4 +1,17 @@
 -- Chay sau 01_tao_bang.sql. Tep chi doc, khong thay doi du lieu.
+DO $$
+BEGIN
+    IF (SELECT count(*) FROM information_schema.tables
+        WHERE table_schema='dau_gia' AND table_type='BASE TABLE') <> 11 THEN
+        RAISE EXCEPTION 'Luoc do phai co dung 11 bang co so';
+    END IF;
+    IF (SELECT count(*) FROM pg_constraint c JOIN pg_namespace n ON n.oid=c.connamespace
+        WHERE n.nspname='dau_gia' AND c.contype='p') <> 11 THEN
+        RAISE EXCEPTION 'Moi bang phai co khoa chinh';
+    END IF;
+END;
+$$;
+
 SELECT current_database() AS "CoSoDuLieu", current_user AS "TaiKhoan";
 
 -- Ket qua: 11 bang co so, rieng VIEW khong tinh la bang du lieu.

@@ -66,7 +66,7 @@ BEGIN
         (ma, ma, 100, 10, clock_timestamp()-interval '1 hour', clock_timestamp()+interval '1 hour'),
         (ma-1, ma, 100, 10, clock_timestamp()-interval '1 hour', clock_timestamp()+interval '1 hour');
     INSERT INTO pg_temp.ket_qua_ddl VALUES ('02. Mot tai san duoc co nhieu phien', 'DAT');
-    SELECT "GiaHienTai", "MaLuotDanDau" INTO gia, dan_dau
+    SELECT "GiaHienTai", "MaLuotDanDau" INTO STRICT gia, dan_dau
     FROM dau_gia."ThongTinPhienDauGia" WHERE "MaPhien" = ma;
     IF gia IS NOT NULL OR dan_dau IS NOT NULL THEN
         RAISE EXCEPTION 'Phien chua co luot phai co gia/nguoi dan dau NULL';
@@ -79,9 +79,11 @@ BEGIN
         (ma, ma, ma-1, 100, yeu_cau_1),
         (ma-1, ma, ma-2, 110, yeu_cau_2),
         (ma-2, ma-1, ma-1, 100, yeu_cau_3);
-    SELECT "GiaHienTai", "MaLuotDanDau" INTO gia, dan_dau
+    SELECT "GiaHienTai", "MaLuotDanDau" INTO STRICT gia, dan_dau
     FROM dau_gia."ThongTinPhienDauGia" WHERE "MaPhien" = ma;
-    IF gia <> 110 OR dan_dau <> ma-1 THEN RAISE EXCEPTION 'VIEW sai luot dan dau'; END IF;
+    IF gia IS DISTINCT FROM 110::numeric OR dan_dau IS DISTINCT FROM ma-1 THEN
+        RAISE EXCEPTION 'VIEW sai luot dan dau';
+    END IF;
     INSERT INTO pg_temp.ket_qua_ddl VALUES ('04. VIEW lay dung MAX va ma luot dan dau', 'DAT');
     INSERT INTO pg_temp.ket_qua_ddl VALUES ('05. Hai phien khac nhau duoc co cung muc gia', 'DAT');
 
@@ -131,6 +133,14 @@ END;
 $$;
 
 SET CONSTRAINTS ALL IMMEDIATE;
+DO $$
+BEGIN
+    IF (SELECT count(*) FROM pg_temp.ket_qua_ddl) <> 23 THEN
+        RAISE EXCEPTION 'Phai thuc hien du 23 kiem tra rang buoc';
+    END IF;
+END;
+$$;
+
 SELECT ten_kiem_tra AS "KiemTra", ket_qua AS "KetQua"
 FROM pg_temp.ket_qua_ddl ORDER BY ten_kiem_tra;
 
