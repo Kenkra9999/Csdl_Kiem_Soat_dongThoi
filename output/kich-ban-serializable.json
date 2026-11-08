@@ -11,11 +11,11 @@
     "bid_id": 6,
     "status": "ACCEPTED",
     "auction_id": 8,
-    "accepted_at": "2026-10-27T22:03:36.105394+07:00",
+    "accepted_at": "2026-11-08T09:26:49.185052+07:00",
     "attempts": 1,
     "retries": 0,
-    "latency_ms": 56.126,
-    "request_id": "17f496cd-be21-46e7-9e63-7068a0aedb21"
+    "latency_ms": 36.226,
+    "request_id": "2afaa64f-2268-4cc7-ada8-a8311b08c1e5"
   },
   {
     "step": "Gửi lại cùng UUID",
@@ -24,24 +24,11 @@
     "bid_id": 6,
     "status": "REPLAYED",
     "auction_id": 8,
-    "accepted_at": "2026-10-27T22:03:36.105394+07:00",
+    "accepted_at": "2026-11-08T09:26:49.185052+07:00",
     "attempts": 1,
     "retries": 0,
-    "latency_ms": 155.578,
-    "request_id": "17f496cd-be21-46e7-9e63-7068a0aedb21"
-  },
-  {
-    "step": "Hai người cùng trả 110",
-    "code": "BID_ACCEPTED",
-    "amount": 110,
-    "bid_id": 7,
-    "status": "ACCEPTED",
-    "auction_id": 8,
-    "accepted_at": "2026-10-27T22:03:36.31853+07:00",
-    "attempts": 1,
-    "retries": 0,
-    "latency_ms": 54.795,
-    "request_id": "2ce41dd9-f24f-45f1-8680-cb8d0129d38f"
+    "latency_ms": 29.934,
+    "request_id": "2afaa64f-2268-4cc7-ada8-a8311b08c1e5"
   },
   {
     "step": "Hai người cùng trả 110",
@@ -50,8 +37,21 @@
     "minimum": 120.0,
     "attempts": 2,
     "retries": 1,
-    "latency_ms": 107.055,
-    "request_id": "5da6886b-0cdf-4c5d-be08-41f03d491e40"
+    "latency_ms": 80.163,
+    "request_id": "c86d9787-d937-43d9-8479-f4e27ef7cb1a"
+  },
+  {
+    "step": "Hai người cùng trả 110",
+    "code": "BID_ACCEPTED",
+    "amount": 110,
+    "bid_id": 7,
+    "status": "ACCEPTED",
+    "auction_id": 8,
+    "accepted_at": "2026-11-08T09:26:49.25638+07:00",
+    "attempts": 1,
+    "retries": 0,
+    "latency_ms": 39.27,
+    "request_id": "f2259c0a-9466-4f3f-9fac-2d569f72c372"
   },
   {
     "step": "Đóng sớm",
@@ -59,30 +59,30 @@
     "status": "REJECTED",
     "attempts": 1,
     "retries": 0,
-    "latency_ms": 139.513
+    "latency_ms": 25.819
   },
   {
     "step": "Đóng khi hết hạn",
     "code": "AUCTION_CLOSED",
     "status": "CLOSED",
-    "closed_at": "2026-10-27T22:03:40.766805+07:00",
+    "closed_at": "2026-11-08T09:26:53.465106+07:00",
     "auction_id": 8,
     "winning_price": 110.0,
     "winning_bid_id": 7,
     "attempts": 1,
     "retries": 0,
-    "latency_ms": 160.69
+    "latency_ms": 43.253
   },
   {
     "step": "Đóng lần nữa",
     "code": "CLOSE_REPLAYED",
     "status": "REPLAYED",
-    "closed_at": "2026-10-27T22:03:40.766805+07:00",
+    "closed_at": "2026-11-08T09:26:53.465106+07:00",
     "auction_id": 8,
     "winning_bid_id": 7,
     "attempts": 1,
     "retries": 0,
-    "latency_ms": 33.248
+    "latency_ms": 29.796
   },
   {
     "step": "Kiểm tra bất biến",

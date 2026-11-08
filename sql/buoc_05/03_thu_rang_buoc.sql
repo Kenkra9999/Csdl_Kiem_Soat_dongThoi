@@ -33,8 +33,8 @@ $$;
 
 DO $$
 DECLARE
-    ma bigint := -1000000000 - txid_current();
-    thu text := 'buoc5-' || txid_current() || '@example.test';
+    ma bigint := -1000000000 - (pg_current_xact_id()::text)::bigint;
+    thu text := 'buoc5-' || pg_current_xact_id()::text || '@example.test';
     yeu_cau_1 uuid := gen_random_uuid();
     yeu_cau_2 uuid := gen_random_uuid();
     yeu_cau_3 uuid := gen_random_uuid();
@@ -61,11 +61,12 @@ BEGIN
     SET CONSTRAINTS ALL DEFERRED;
     INSERT INTO pg_temp.ket_qua_ddl VALUES ('01. Tai san co dung lop con cung dinh danh', 'DAT');
 
+    -- Phien ma-1 la phien CU da dong cua cung tai san; phien ma dang mo.
     INSERT INTO dau_gia."PhienDauGia"
-        ("MaPhien", "MaTaiSan", "GiaKhoiDiem", "BuocGia", "ThoiDiemMo", "ThoiDiemDong") VALUES
-        (ma, ma, 100, 10, clock_timestamp()-interval '1 hour', clock_timestamp()+interval '1 hour'),
-        (ma-1, ma, 100, 10, clock_timestamp()-interval '1 hour', clock_timestamp()+interval '1 hour');
-    INSERT INTO pg_temp.ket_qua_ddl VALUES ('02. Mot tai san duoc co nhieu phien', 'DAT');
+        ("MaPhien", "MaTaiSan", "GiaKhoiDiem", "BuocGia", "ThoiDiemMo", "ThoiDiemDong", "TrangThai") VALUES
+        (ma, ma, 100, 10, clock_timestamp()-interval '1 hour', clock_timestamp()+interval '1 hour', 'DangMo'),
+        (ma-1, ma, 100, 10, clock_timestamp()-interval '3 hour', clock_timestamp()-interval '2 hour', 'DaDong');
+    INSERT INTO pg_temp.ket_qua_ddl VALUES ('02. Mot tai san duoc co nhieu phien theo thoi gian', 'DAT');
     SELECT "GiaHienTai", "MaLuotDanDau" INTO STRICT gia, dan_dau
     FROM dau_gia."ThongTinPhienDauGia" WHERE "MaPhien" = ma;
     IF gia IS NOT NULL OR dan_dau IS NOT NULL THEN
@@ -129,14 +130,16 @@ BEGIN
         RAISE EXCEPTION 'Bang phien co du lieu suy dien thay vi VIEW';
     END IF;
     INSERT INTO pg_temp.ket_qua_ddl VALUES ('23. Bang phien khong luu lap du lieu suy dien', 'DAT');
+    PERFORM pg_temp.phai_tu_choi('24. Mot tai san khong co hai phien dang mo', '23505', format(
+        'INSERT INTO dau_gia."PhienDauGia" ("MaPhien","MaTaiSan","GiaKhoiDiem","BuocGia","ThoiDiemMo","ThoiDiemDong") VALUES (%s,%s,100,10,clock_timestamp(),clock_timestamp()+interval ''1 hour'')',ma-10,ma));
 END;
 $$;
 
 SET CONSTRAINTS ALL IMMEDIATE;
 DO $$
 BEGIN
-    IF (SELECT count(*) FROM pg_temp.ket_qua_ddl) <> 23 THEN
-        RAISE EXCEPTION 'Phai thuc hien du 23 kiem tra rang buoc';
+    IF (SELECT count(*) FROM pg_temp.ket_qua_ddl) <> 24 THEN
+        RAISE EXCEPTION 'Phai thuc hien du 24 kiem tra rang buoc';
     END IF;
 END;
 $$;

@@ -7,6 +7,7 @@ import unittest
 import uuid
 from concurrent.futures import ThreadPoolExecutor
 from decimal import Decimal
+from pathlib import Path
 
 import psycopg
 
@@ -422,6 +423,60 @@ class AuctionIntegrationTests(unittest.TestCase):
                     winner = conn.execute("SELECT winning_bid_id FROM auction.results WHERE auction_id=%s", (auction_id,)).fetchone()
                     self.assertEqual(winner["winning_bid_id"], committed_bid["bid_id"])
                 self.assert_invariants()
+
+
+    def test_33_equal_amount_is_blocked_by_candidate_key(self):
+        """Ngay cả khi đi vòng qua place_bid, CSDL không nhận hai lượt cùng giá/phiên."""
+        self.assertEqual(self.client.bid(self.auction, 2, 100)["status"], "ACCEPTED")
+        with self.assertRaises(psycopg.errors.UniqueViolation):
+            with connect(self.dsn) as conn:
+                conn.execute("""
+                    INSERT INTO auction.bids(auction_id,bidder_id,amount,request_id)
+                    VALUES (%s,3,100,%s)
+                """, (self.auction, uuid.uuid4()))
+
+    def test_34_one_open_auction_per_asset(self):
+        with connect(self.dsn) as conn:
+            asset_id = conn.execute("SELECT asset_id FROM auction.auctions WHERE id=%s",
+                                    (self.auction,)).fetchone()["asset_id"]
+        insert = """
+            INSERT INTO auction.auctions(asset_id,start_price,bid_step,opens_at,closes_at)
+            VALUES (%s,100,10,clock_timestamp(),clock_timestamp()+interval '1 hour') RETURNING id
+        """
+        with self.assertRaises(psycopg.errors.UniqueViolation):
+            with connect(self.dsn) as conn:
+                conn.execute(insert, (asset_id,))
+        # Sau khi phiên cũ đóng, tài sản được đưa ra đấu giá lại.
+        self.expire()
+        self.assertEqual(self.client.close(self.auction)["status"], "CLOSED")
+        with connect(self.dsn) as conn:
+            self.assertIsNotNone(conn.execute(insert, (asset_id,)).fetchone()["id"])
+        self.assert_invariants()
+
+    def test_35_dynamic_report_combines_category_tree_and_price(self):
+        def ids(*args):
+            with connect(self.dsn) as conn:
+                return {row["auction_id"] for row in conn.execute(
+                    "SELECT * FROM auction.auction_report(%s::text,%s::bigint,%s::numeric)", args)}
+        everything = ids(None, None, None)
+        self.assertEqual(ids(None, 1, None), everything)          # gốc = cả cây
+        self.assertIn(3, ids(None, 6, None))                      # Điện tử > Máy ảnh
+        self.assertNotIn(1, ids(None, 6, None))                   # tranh không thuộc nhánh điện tử
+        closed = ids("CLOSED", None, None)
+        self.assertTrue({4, 5} <= closed and 1 not in closed, closed)
+        self.assertEqual(ids(None, None, 10**9), set())           # không phiên nào >= 1 tỷ
+        self.assertEqual(ids("CLOSED", 2, 2_000_000), {4})        # 3 bộ lọc cùng lúc
+
+    def test_36_upgrade_script_is_idempotent(self):
+        upgrade = (Path(__file__).resolve().parents[1] / "sql" / "07_nang_cap.sql").read_text(encoding="utf-8")
+        with connect(self.dsn, autocommit=True) as conn:
+            conn.execute(upgrade)
+            conn.execute(upgrade)
+            present = conn.execute("""
+                SELECT to_regclass('auction.auctions_one_open_per_asset') IS NOT NULL AS idx,
+                       EXISTS(SELECT 1 FROM pg_constraint WHERE conname='bids_auction_id_amount_key') AS uniq
+            """).fetchone()
+        self.assertTrue(present["idx"] and present["uniq"], present)
 
 
 class PurePythonTests(unittest.TestCase):

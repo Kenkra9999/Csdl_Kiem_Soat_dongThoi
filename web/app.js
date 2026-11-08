@@ -362,14 +362,15 @@ async function loadMeasurements() {
     const summaries = data.benchmark?.summaries || [];
     const cards = [];
     for (const strategy of ['row_lock', 'serializable']) {
-      const rows = summaries.filter(row => row.strategy === strategy); if (!rows.length) continue;
+      // Thẻ tổng hợp kịch bản "nhiều người cùng trả giá"; bản đo cũ không có trường scenario.
+      const rows = summaries.filter(row => row.strategy === strategy && (!row.scenario || row.scenario === 'dong_thoi')); if (!rows.length) continue;
       const card = node('div', 'benchmark-card'); card.append(node('h3', '', strategy === 'row_lock' ? 'Khóa dòng' : 'SERIALIZABLE'));
       const dl = node('dl');
       const aggregate = [ ['Yêu cầu logic', String(rows.reduce((sum, r) => sum + Number(r.requests || 0), 0))], ['Độ trễ TB / yêu cầu', mean(rows, 'latency_mean_ms').toLocaleString('vi-VN', { maximumFractionDigits: 1 }) + ' ms'], ['Tổng lần thử lại', String(rows.reduce((sum, r) => sum + Number(r.total_retries || 0), 0))], ['Bất biến dữ liệu', rows.every(r => r.invariants_passed) ? 'Đạt mọi vòng' : 'Cần kiểm tra'] ];
       aggregate.forEach(([label, value]) => dl.append(node('dt', '', label), node('dd', '', value))); card.append(dl); cards.push(card);
     }
     const comparison = node('div', 'benchmark-grid'); comparison.append(...cards); $('#benchmark-comparison').replaceChildren(comparison);
-    $('#measurement-note').textContent = summaries.length ? 'Số đo đã lưu ngày ' + localTime(data.benchmark.measured_at_utc, true) + '. Thời gian trung bình đã gồm kết nối, commit và retry; kết quả phụ thuộc tải máy và lịch xử lý.' : 'Chạy benchmark bằng công cụ kiểm thử để có số đo thực tế.';
+    $('#measurement-note').textContent = summaries.length ? 'Số đo đã lưu ngày ' + localTime(data.benchmark.measured_at_utc, true) + '. Kịch bản nhiều người cùng trả một mức giá; thời gian gồm chờ khóa, commit và retry (mỗi người giữ một kết nối). Bảng đủ 4 kịch bản ở mục 8 báo cáo.' : 'Chạy benchmark bằng công cụ kiểm thử để có số đo thực tế.';
     app.labLoaded = true;
   } catch (error) { $('#measurement-note').textContent = error.message; }
   finally { app.measurementsBusy = false; }

@@ -66,7 +66,7 @@ Ghi `BID_ACCEPTED` và `AUCTION_CLOSED` cùng giao dịch nghiệp vụ. Nhật 
 
 ### 3.1. Thực thể và chuyên biệt hóa
 
-Mô hình EER chi tiết trong `docs/EER.md`. Tài sản là lớp cha, có ba lớp con nghệ thuật, sưu tầm, điện tử; chuyên biệt hóa total và disjoint. Các bảng con dùng PK đồng thời là FK tới tài sản cha. Trigger ràng buộc hoãn đến cuối giao dịch kiểm tra mỗi tài sản có đúng bảng con phù hợp. Cần hoãn vì khi chèn tài sản cha, bảng con có thể chưa được chèn ở câu lệnh đó.
+Sơ đồ EER ký hiệu Chen theo tài liệu SGU nằm ở `docs/eer/EER_DE_TAI_19_DA_SUA.pdf` (trang 3 của bản PDF này); `GiaHienTai` và mối kết hợp `DanDau` vẽ nét đứt vì là dữ liệu suy diễn, `ThuDienTu` và `MaYeuCau` gạch chân vì là khóa ứng viên. Ánh xạ sang bảng trong `docs/EER.md`. Tài sản là lớp cha, có ba lớp con nghệ thuật, sưu tầm, điện tử; chuyên biệt hóa total và disjoint. Các bảng con dùng PK đồng thời là FK tới tài sản cha. Trigger ràng buộc hoãn đến cuối giao dịch kiểm tra mỗi tài sản có đúng bảng con phù hợp. Cần hoãn vì khi chèn tài sản cha, bảng con có thể chưa được chèn ở câu lệnh đó.
 
 Cây danh mục dùng adjacency list `(id, parent_id)`, cấm chu trình. Người dùng bán tài sản qua `seller_id`; tham gia qua bảng nối `registrations`. Không tạo hai bản ghi người dùng cho hai vai trò.
 
@@ -124,7 +124,7 @@ category_id -> category_name, parent_id
 (parent_id, category_name) -> category_id
 ```
 
-Không giả định họ tên là duy nhất, tên tài sản xác định tài sản, tên danh mục xác định danh mục toàn cục, hay mức giá xác định một bid trên toàn CSDL. Việc cấm hai bid bằng giá tạo khóa nghiệp vụ `(auction_id,amount)` trong dữ liệu bid hợp lệ, không phải FD `amount -> bid_id`. Khóa này được bảo đảm bởi protocol giá tăng nghiêm ngặt; schema không khai báo thêm UNIQUE cho cặp này. Với danh mục gốc, FD theo cặp cha/tên được hiểu trong mô hình logic dùng một ký hiệu gốc thống nhất; PostgreSQL hiện thực quy tắc tương đương bằng UNIQUE NULLS NOT DISTINCT để xử lý NULL của parent_id.
+Không giả định họ tên là duy nhất, tên tài sản xác định tài sản, tên danh mục xác định danh mục toàn cục, hay mức giá xác định một bid trên toàn CSDL. Việc cấm hai bid bằng giá tạo khóa nghiệp vụ `(auction_id,amount)` trong dữ liệu bid hợp lệ, không phải FD `amount -> bid_id`. Khóa này được bảo đảm hai lớp: protocol giá tăng nghiêm ngặt trong `place_bid`, và ràng buộc `UNIQUE (auction_id, amount)` (`bids_auction_id_amount_key`) làm hàng rào cuối cùng ở mức CSDL, kể cả khi có ai đó ghi thẳng vào bảng. Với danh mục gốc, FD theo cặp cha/tên được hiểu trong mô hình logic dùng một ký hiệu gốc thống nhất; PostgreSQL hiện thực quy tắc tương đương bằng UNIQUE NULLS NOT DISTINCT để xử lý NULL của parent_id.
 
 ### 4.3. Khóa ứng viên bằng bao đóng
 
@@ -165,7 +165,7 @@ Gom các FD chung vế trái để tạo `Bid`, `AuctionCore`, `Asset`, `Bidder`
 
 Phân rã không mất mát: lần lượt tách nhóm thuộc tính do `auction_id`, `asset_id`, `bidder_id`, `seller_id`, `category_id` xác định. Mỗi bước hai quan hệ có giao là một định thức X; X là khóa của quan hệ được tách ra, thỏa điều kiện lossless của phân rã nhị phân `X -> Y`. Lặp các bước bảo toàn lossless; join hai bản sao Users theo đúng bí danh bidder/seller phục hồi R.
 
-Bảo toàn phụ thuộc: từng FD của Fmin nằm trọn trong một quan hệ sau phân rã; kiểm tra tại quan hệ đó không cần join. Khóa thay thế email và request_id được giữ bằng UNIQUE. Các phụ thuộc được bảo toàn này là FD; những ràng buộc như thời hạn, giá tăng, cây không chu trình và winner cùng phiên vẫn cần CHECK/FK/trigger/hàm, không suy ra chỉ từ chuẩn hóa.
+Bảo toàn phụ thuộc: từng FD của Fmin nằm trọn trong một quan hệ sau phân rã; kiểm tra tại quan hệ đó không cần join. Các khóa thay thế email, request_id và cặp (auction_id, amount) đều được khai báo UNIQUE, nên mọi khóa ứng viên trong bảng phân tích đều được CSDL thực thi. Các phụ thuộc được bảo toàn này là FD; những ràng buộc như thời hạn, giá tăng, cây không chu trình và winner cùng phiên vẫn cần CHECK/FK/trigger/hàm, không suy ra chỉ từ chuẩn hóa.
 
 ### 4.7. Các quan hệ bổ sung
 
@@ -204,7 +204,7 @@ LEFT JOIN giúp vẫn thấy phiên chưa có bid. Người đang dẫn chưa ph
 
 ### 5.2. Báo cáo có bộ lọc động
 
-`auction.auction_report(p_status, p_category_id, p_min_price)` nhận bộ lọc tùy chọn; NULL nghĩa là bỏ lọc. Danh mục có thể bao gồm hậu duệ bằng recursive CTE. Lọc được tham số hóa; không ghép chuỗi nhập của người dùng thành tên cột hay biểu thức SQL tùy ý. Đây là báo cáo động theo giá trị bộ lọc, không phải cho client thực thi SQL tự do.
+`auction.auction_report(p_status, p_category_id, p_min_price)` nhận bộ lọc tùy chọn; NULL nghĩa là bỏ lọc. Hàm viết bằng PL/pgSQL và dùng **SQL động**: chỉ ghép vào `WHERE` những điều kiện có tham số khác NULL, rồi chạy bằng `RETURN QUERY EXECUTE ... USING p_status, p_category_id, p_min_price`. Giá trị luôn đi qua tham số `$1, $2, $3` nên không thể SQL injection (test 18 thử chuỗi `OPEN' OR 1=1 --`); người dùng không bao giờ ghép chuỗi vào câu lệnh. Câu lệnh chỉ chứa điều kiện thật sự cần nên bộ tối ưu lập kế hoạch cho đúng tổ hợp bộ lọc. Lọc danh mục bao gồm toàn bộ cây con nhờ `WITH RECURSIVE`.
 
 ```sql
 SELECT * FROM auction.auction_report(NULL, NULL, NULL);
@@ -286,10 +286,19 @@ Máy Windows, PostgreSQL 18 đang chạy cục bộ, Python 3.12 và psycopg 3. 
 
 ```powershell
 .\.venv\Scripts\python.exe -m auction_lab test --output output/test-results.json
-.\.venv\Scripts\python.exe -m auction_lab benchmark --workers 12 --requests 60 --rounds 3 --output output/benchmark
+.\.venv\Scripts\python.exe -m auction_lab benchmark --workers 12 --waves 10 --rounds 3 --output output/benchmark
 ```
 
-Mỗi strategy chạy cùng số người, cùng cấu hình giá, cùng dãy payload và số worker; dữ liệu được khởi tạo lại độc lập trước lượt đo. Thứ tự thực thi thực tế do bộ lập lịch quyết định, vì vậy số bid được chấp nhận có thể khác nhau dù dãy yêu cầu giống nhau. Barrier khởi động giúp tạo cạnh tranh thực, không dùng vòng lặp tuần tự giả đồng thời.
+Benchmark đo **đúng bốn kịch bản của đề bài** cho cả hai giao thức (mã: `auction_lab/benchmark.py`):
+
+| Mã | Kịch bản | Cách tạo tải | Kỳ vọng phải đạt |
+|---|---|---|---|
+| `dong_thoi` | Nhiều người trả giá cùng lúc | 12 người cùng trả **cùng một mức** giá tối thiểu, 10 đợt | Mỗi đợt đúng 1 ACCEPTED, 11 REJECTED |
+| `gui_lai` | Yêu cầu được gửi lại | 12 bản sao cùng UUID và nội dung gửi đồng thời, 10 đợt | Mỗi đợt 1 ACCEPTED, 11 REPLAYED, không lượt trùng |
+| `dong_phien` | Trả giá cạnh tranh với đóng phiên | 11 người trả giá liên tục theo đợt, 1 luồng đóng phiên đúng lúc hết hạn (phiên dài 1 giây) | 1 kết quả, người thắng = lượt cao nhất, 0 lượt sau hạn |
+| `loi_giua` | Lỗi sau khi ghi lượt, trước khi cập nhật giá | Trigger thử nghiệm ném lỗi ngay sau `INSERT bids`; 12 người, 10 đợt | Mọi yêu cầu lỗi; 0 lượt, 0 nhật ký, giá vẫn NULL |
+
+Mỗi vòng × giao thức tạo lại schema từ seed. Người trả, số tiền và UUID được sinh tất định, nên hai giao thức nhận **cùng một danh sách yêu cầu**; Barrier cho mọi worker xuất phát cùng lúc để tạo cạnh tranh thật; thứ tự giao thức đảo giữa các vòng. Mỗi worker giữ một kết nối suốt vòng đo.
 
 ### 8.2. Các kịch bản kiểm thử
 
@@ -310,29 +319,37 @@ Mỗi strategy chạy cùng số người, cùng cấu hình giá, cùng dãy pa
 
 `accepted`: yêu cầu tạo bid mới; `replayed`: trả lại bid đã có; `rejected`: vi phạm nghiệp vụ; `retries`: tổng lần phải chạy lại transaction; `exhausted`: hết giới hạn thử lại; `errors`: lỗi ngoài các loại dự kiến. Số yêu cầu logic là số lần client được gọi; tổng attempts có thể lớn hơn vì retry.
 
-Latency end-to-end đo từ lúc worker bắt đầu yêu cầu logic tới kết quả cuối, bao gồm tạo kết nối, chờ khóa, backoff và retry; không bao gồm thời gian request nằm chờ trong hàng đợi ThreadPool trước khi worker bắt đầu. Mean/p50/p95 tính trên tất cả yêu cầu, kể cả bị từ chối; percentile dùng nearest-rank `ceil(q*n)`. Không chia throughput cho tổng attempts khi đang gọi đó là throughput yêu cầu logic.
+Latency đo từ lúc worker gọi hàm tới khi COMMIT xong, bao gồm chờ khóa, backoff và mọi lần retry. Mỗi worker giữ một kết nối nên **không** gồm thời gian mở kết nối TCP/xác thực (bản đo trước đây mở kết nối mới cho mỗi lần thử, làm độ trễ ~100 ms chủ yếu là chi phí kết nối và che mất khác biệt giữa hai giao thức). Mean/p50/p95 tính trên tất cả yêu cầu, kể cả bị từ chối; percentile dùng nearest-rank `ceil(q*n)`. Không chia throughput cho tổng attempts khi đang gọi đó là throughput yêu cầu logic.
 
 ### 8.4. Kết quả thực đo
 
 <!-- BENCHMARK_RESULTS_START -->
-Thời điểm ghi nhận benchmark: 21:59:15 ngày 27/10/2026 theo giờ Việt Nam. Môi trường thực đo: PostgreSQL 18.6 x86_64 Windows, Python 3.12.10, psycopg 3.3.6, Windows 11; max_connections=100, shared_buffers=128MB, synchronous_commit=on. Nguồn: `output/benchmark/results.json`, `summary.csv`, `requests.csv`.
+Thời điểm đo: 09:25 ngày 08/11/2026 (giờ Việt Nam). Môi trường: PostgreSQL 18.6 x86_64 Windows, Python 3.12.10, psycopg 3.3.8, Windows 11; max_connections=100, shared_buffers=128MB, synchronous_commit=on. Nguồn: `output/benchmark/results.json`, `summary.csv` (24 dòng: 3 vòng × 2 giao thức × 4 kịch bản), `requests.csv` (từng yêu cầu).
 
-Workload có seed shuffle 19019, 12 worker, 60 yêu cầu mỗi strategy mỗi round, 3 round, tổng 360 yêu cầu. Thứ tự chạy strategy được đảo giữa các round để giảm thiên lệch làm nóng. Mỗi round dùng dữ liệu mới tương đương.
+Bảng gộp 3 vòng. Độ trễ tính trên mọi yêu cầu của kịch bản (kể cả bị từ chối/lỗi); p50/p95 theo nearest-rank trên toàn bộ mẫu gộp, không lấy trung bình các p95.
 
-| Round | Strategy | Accepted | Replayed | Rejected | Retry | Mean ms | p50 ms | p95 ms | Req/s |
-|---|---|---:|---:|---:|---:|---:|---:|---:|---:|
-| 1 | row_lock | 4 | 2 | 54 | 0 | 100.547 | 91.267 | 197.510 | 103.919 |
-| 1 | serializable | 7 | 3 | 50 | 17 | 126.342 | 90.339 | 298.295 | 62.881 |
-| 2 | row_lock | 4 | 2 | 54 | 0 | 112.884 | 107.951 | 154.823 | 100.221 |
-| 2 | serializable | 4 | 2 | 54 | 5 | 100.529 | 86.987 | 190.670 | 107.174 |
-| 3 | row_lock | 3 | 2 | 55 | 0 | 106.092 | 100.553 | 159.757 | 96.058 |
-| 3 | serializable | 7 | 3 | 50 | 17 | 105.331 | 76.813 | 256.966 | 91.223 |
+| Kịch bản | Giao thức | Yêu cầu | Nhận | Gửi lại | Từ chối | Lỗi | YC phải thử lại | Tổng lần thử lại | TB ms | p50 ms | p95 ms | Đạt kỳ vọng |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|:---:|
+| 1. Nhiều người cùng trả | row_lock | 360 | 30 | 0 | 330 | 0 | 0 | 0 | 42.57 | 10.21 | 280.96 | 3/3 |
+| 1. Nhiều người cùng trả | serializable | 360 | 30 | 0 | 330 | 0 | 330 | 330 | 15.07 | 14.91 | 27.85 | 3/3 |
+| 2. Gửi lại cùng yêu cầu | row_lock | 360 | 30 | 330 | 0 | 0 | 0 | 0 | 5.82 | 4.69 | 9.88 | 3/3 |
+| 2. Gửi lại cùng yêu cầu | serializable | 360 | 30 | 330 | 0 | 0 | 323 | 323 | 12.17 | 12.51 | 17.90 | 3/3 |
+| 3. Trả giá vs đóng phiên | row_lock | 4334 | 393 | 0 | 3941 | 0 | 0 | 0 | 5.79 | 4.52 | 8.34 | 3/3 |
+| 3. Trả giá vs đóng phiên | serializable | 2541 | 231 | 0 | 2310 | 0 | 2225 | 2225 | 9.95 | 10.17 | 14.34 | 3/3 |
+| 4. Lỗi giữa giao dịch | row_lock | 360 | 0 | 0 | 0 | 360 | 0 | 0 | 4.88 | 4.67 | 7.35 | 3/3 |
+| 4. Lỗi giữa giao dịch | serializable | 360 | 0 | 0 | 0 | 360 | 0 | 0 | 4.01 | 3.65 | 7.55 | 3/3 |
 
-Cả 6 đợt đều có errors=0, exhausted=0 và 8/8 bất biến đạt. Tổng theo strategy: row_lock có 11 accepted, 6 replayed, 163 rejected và 0 retry; serializable có 18 accepted, 8 replayed, 154 rejected và 39 retry. Mean gộp 180 yêu cầu/strategy lần lượt khoảng 106.508 ms và 110.734 ms. Không lấy trung bình các p95 theo round để gọi đó là p95 gộp.
+Cả 24 dòng đo đều có `exhausted=0`, 8/8 bất biến đạt và đạt kỳ vọng của kịch bản. Lỗi ở kịch bản 4 là lỗi **cố ý cài** (trigger ném `INJECTED_AFTER_BID_INSERT`), sau đó kiểm tra thấy 0 lượt, 0 dòng nhật ký, giá hiện tại vẫn NULL và `revision` vẫn 0. Ở kịch bản 3, kịch bản đếm số yêu cầu xử lý được trong cùng cửa sổ 1 giây nên số yêu cầu khác nhau giữa hai giao thức; giao dịch đóng phiên mất 2–5 ms, riêng một vòng row_lock 284 ms vì phải xếp hàng sau các lượt trả giá đang giữ khóa.
 
-Bộ test sau khi tích hợp giao diện: **52/52 đạt**, gồm 35 kiểm thử lõi CSDL và 17 kiểm thử tầng HTTP của giao diện; 0 failure, 0 error, 0 skip, thời gian 22.182 giây theo `output/test-results.json`, ghi nhận lúc 07:35:53 ngày 28/10/2026 theo giờ Việt Nam. Kiểm thử lõi bao gồm lỗi tuần tự hóa thật và retry toàn transaction, không chỉ mô phỏng exception phía client. Kịch bản biên dùng Event để giữ một bid hợp lệ chưa commit qua hạn đóng, chứng minh close phải chờ và chốt đúng bid đó ở cả hai protocol; với SERIALIZABLE, close thực sự có retry. Nhóm HTTP kiểm tra truy vấn đọc, thao tác trả giá/phát lại, trạng thái chốt phiên, từ chối yêu cầu không hợp lệ, bảo vệ token/Origin/đường dẫn và kịch bản cạnh tranh thực. Benchmark 360 yêu cầu ở bảng trên là lần đo CSDL đã lưu; bổ sung HTTP không thay đổi thuật toán hay số liệu của lần đo đó.
+Bộ test hiện tại: **56/56 đạt** (39 kiểm thử lõi CSDL + 17 kiểm thử tầng HTTP), 0 failure, 0 error, 0 skip, theo `output/test-results.json`; cộng 8/8 kiểm thử JavaScript và 24/24 kiểm tra ràng buộc DDL bước 5.
 
-Ở workload cục bộ này, row_lock có p95 thấp hơn ở cả ba round và không cần retry. SERIALIZABLE có 39 retry nhưng vẫn hoàn thành mọi yêu cầu logic; mean của round 2 và 3 có thể thấp hơn row_lock. Số accepted khác nhau vì giá cao có thể được xử lý sớm và làm những giá thấp còn lại bị từ chối. Các quan sát này không chứng minh ưu thế phổ quát ngoài cấu hình đã đo.
+Nhận xét trên số đo này:
+
+- **Kết quả nghiệp vụ giống hệt nhau** ở kịch bản 1, 2, 4 (cùng số nhận/gửi lại/từ chối/lỗi): hai giao thức đều đúng; khác nhau ở **cách** đạt được.
+- **SERIALIZABLE trả giá bằng thử lại**: ở kịch bản 1, mỗi người thua cuộc bị hủy đúng một lần (330/330) rồi chạy lại, đọc giá mới và bị từ chối `BID_TOO_LOW`. Trung vị cao hơn khóa dòng (14.9 so với 10.2 ms) nhưng đuôi rất ổn định (p95 27.9 ms).
+- **Khóa dòng không thử lại** nhưng xếp hàng: người cuối hàng chờ 11 giao dịch trước, nên đuôi độ trễ dài (p95 281 ms, dao động mạnh giữa các vòng: 42 → 405 → 134 ms), một phần do bộ lập lịch Windows khi đánh thức tiến trình đang chờ khóa.
+- Ở kịch bản 3, khóa dòng xử lý được nhiều yêu cầu hơn trong cùng 1 giây (4334 so với 2541) vì không tốn công làm lại giao dịch bị hủy.
+- Kết luận chỉ áp dụng cho máy và tải này; không suy ra ưu thế tốc độ phổ quát.
 <!-- BENCHMARK_RESULTS_END -->
 
 ### 8.5. Phân tích và giới hạn suy luận

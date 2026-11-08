@@ -63,15 +63,23 @@ Mỗi lần chạy tạo một phiên mới, giá khởi điểm 100, bước 10
 
 ### 5.1. Chuẩn bị phiên dành riêng cho thí nghiệm
 
-Thực hiện bằng tài khoản sở hữu CSDL. Dữ liệu mẫu đã có asset 1 và users 2, 3. Tạo phiên mới và hai đăng ký trong một câu lệnh:
+Thực hiện bằng tài khoản sở hữu CSDL. Một tài sản không được nằm trong hai phiên đang mở (chỉ mục `auctions_one_open_per_asset`), nên câu lệnh dưới đây tạo **tài sản mới + lớp con + phiên + hai đăng ký** trong cùng một giao dịch:
 
 ```sql
-WITH new_auction AS (
+WITH new_asset AS (
+  INSERT INTO auction.assets(seller_id,category_id,kind,title)
+  VALUES (1,3,'ARTWORK','Tài sản thí nghiệm khóa dòng')
+  RETURNING id
+), subtype AS (
+  INSERT INTO auction.artworks(asset_id,artist,material)
+  SELECT id,'Họa sĩ giả lập','Sơn dầu' FROM new_asset
+), new_auction AS (
   INSERT INTO auction.auctions
     (asset_id,start_price,bid_step,opens_at,closes_at)
-  VALUES (1,100000,10000,
-          clock_timestamp()-interval '1 minute',
-          clock_timestamp()+interval '5 minutes')
+  SELECT id,100000,10000,
+         clock_timestamp()-interval '1 minute',
+         clock_timestamp()+interval '5 minutes'
+  FROM new_asset
   RETURNING id
 ), registrations AS (
   INSERT INTO auction.registrations(auction_id,user_id)

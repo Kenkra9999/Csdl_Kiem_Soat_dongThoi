@@ -27,9 +27,9 @@ def parser():
     commands.add_parser("verify", help="Kiểm tra các bất biến CSDL")
     demo = commands.add_parser("scenario", aliases=["demo"], help="Chạy kịch bản nghiệp vụ trên một phiên mới")
     demo.add_argument("--strategy", choices=STRATEGIES, default="row_lock")
-    bench = commands.add_parser("benchmark", help="So sánh trên CSDL *_bench riêng")
-    bench.add_argument("--workers", type=int, default=12)
-    bench.add_argument("--requests", type=int, default=60)
+    bench = commands.add_parser("benchmark", help="Đo 4 kịch bản × 2 giao thức trên CSDL *_bench riêng")
+    bench.add_argument("--workers", type=int, default=12, help="số người gửi đồng thời mỗi đợt")
+    bench.add_argument("--waves", type=int, default=10, help="số đợt cho kịch bản 1, 2, 4")
     bench.add_argument("--rounds", type=int, default=3)
     bench.add_argument("--output", default="output/benchmark")
     test = commands.add_parser("test", help="Kiểm thử trên CSDL *_test riêng")
@@ -82,8 +82,10 @@ def main(argv=None):
             result = demo(args.strategy)
         elif args.command == "benchmark":
             from .benchmark import run_benchmark
-            result = run_benchmark(workers=args.workers, requests=args.requests, rounds=args.rounds, output=args.output)
-            code = 0 if all(row["invariants_passed"] and not row["errors"] and not row["exhausted"] for row in result["summaries"]) else 1
+            result = run_benchmark(workers=args.workers, waves=args.waves, rounds=args.rounds, output=args.output)
+            # Kịch bản 4 CỐ Ý sinh lỗi, nên dùng expectation_met thay cho errors == 0.
+            code = 0 if all(row["invariants_passed"] and row["expectation_met"] and not row["exhausted"]
+                            for row in result["summaries"]) else 1
         elif args.command == "test":
             from .testing import run_tests
             report = run_tests(args.output)
