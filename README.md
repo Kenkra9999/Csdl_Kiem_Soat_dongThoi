@@ -14,7 +14,7 @@ Phần cốt lõi là hai phương án xử lý cùng một nghiệp vụ:
 1. [Tạo database](sql/buoc_05/00_tao_database.sql), chạy riêng tại `postgres` với Auto-commit.
 2. [Tạo 11 bảng và VIEW](sql/buoc_05/01_tao_bang.sql), chạy trên database vừa tạo.
 3. [Xem bảng và các khóa/ràng buộc](sql/buoc_05/02_kiem_tra.sql).
-4. [Thử 23 kiểm tra ràng buộc, tự ROLLBACK dữ liệu thử](sql/buoc_05/03_thu_rang_buoc.sql).
+4. [Thử 24 kiểm tra ràng buộc, tự ROLLBACK dữ liệu thử](sql/buoc_05/03_thu_rang_buoc.sql).
 
 [Hướng dẫn pgAdmin và chứng minh BCNF bằng phụ thuộc hàm](docs/BUOC_05_DDL_BCNF.md). Bốn bảng chính là `NguoiDung`, `TaiSan`, `PhienDauGia`, `LuotTraGia`; các bảng hỗ trợ giữ quan hệ và chuyên biệt hóa trong EER. Giá hiện tại và lượt dẫn đầu của bản logic này được tính qua VIEW, không sao chép vào bảng phiên. Bộ SQL bước 5 không thay đổi các bảng/hàm của database đang chạy giao diện.
 
@@ -90,6 +90,8 @@ Tên CSDL `auction19_demo` được giữ nguyên để tương thích cấu hì
 
 ## Tài liệu để học và bảo vệ
 
+- **[Ôn tập vấn đáp và kết quả rà soát](docs/ON_TAP_VAN_DAP.md)**: đọc file này trước — tóm tắt đề → sản phẩm → minh chứng, các lỗi đã sửa, câu hỏi thầy hay hỏi kèm câu trả lời ngắn.
+- [Sơ đồ EER đã sửa](docs/eer/EER_DE_TAI_19_DA_SUA.pdf) ([PNG](docs/eer/EER_DE_TAI_19_DA_SUA.png), [draw.io để chỉnh](docs/eer/EER_DE_TAI_19_DA_SUA.drawio)).
 - [Báo cáo PDF](output/pdf/BAO_CAO_DE_TAI_19.pdf), có sơ đồ EER và các phụ lục chạy thử.
 - [Báo cáo đầy đủ](docs/BAO_CAO.md): đặc tả, EER, khóa và chuẩn hóa, SQL, transaction, thực nghiệm.
 - [Mô hình EER](docs/EER.md): sơ đồ quan hệ và chuyên biệt hóa tài sản.
@@ -98,7 +100,7 @@ Tên CSDL `auction19_demo` được giữ nguyên để tương thích cấu hì
 - [Hướng dẫn giao diện](docs/GIAO_DIEN.md): mở hệ thống, trả giá, gửi lại yêu cầu, chốt phiên và thực nghiệm.
 - [Kịch bản trình bày và câu hỏi bảo vệ](docs/BAO_VE.md).
 
-Kết quả xác minh đi kèm: **52/52 test Python/HTTP đạt**, gồm 35 kiểm thử lõi CSDL và 17 kiểm thử tầng HTTP của giao diện. Ngoài ra, **8/8 kiểm thử JavaScript đạt**, kiểm tra tiền chính xác, thay bộ lọc nhanh, chống dữ liệu cũ và trạng thái cửa sổ. Chạy bằng `node --test tests/frontend.test.cjs`; Node.js chỉ cần cho kiểm thử phát triển, không cần để chạy giao diện. Benchmark 360 yêu cầu với 12 worker và 3 round cho mỗi cơ chế giữ nguyên kết quả đo của phần CSDL; mọi đợt đạt 8/8 bất biến, không có lỗi hoặc hết giới hạn retry. Số liệu chi tiết nằm trong `output/test-results.json`, `output/benchmark/summary.csv`, `results.json`, `requests.csv` và mục 8 báo cáo. Đây là số đo trên máy hiện tại, không là cam kết tốc độ trên máy khác.
+Kết quả xác minh đi kèm: **56/56 test Python/HTTP đạt**, gồm 39 kiểm thử lõi CSDL và 17 kiểm thử tầng HTTP của giao diện. Ngoài ra, **8/8 kiểm thử JavaScript đạt**, kiểm tra tiền chính xác, thay bộ lọc nhanh, chống dữ liệu cũ và trạng thái cửa sổ. Chạy bằng `node --test tests/frontend.test.cjs`; Node.js chỉ cần cho kiểm thử phát triển, không cần để chạy giao diện. Benchmark đo **4 kịch bản của đề bài** (nhiều người cùng trả giá, gửi lại yêu cầu, trả giá cạnh tranh với đóng phiên, lỗi giữa giao dịch) × 2 cơ chế × 3 vòng với 12 worker; cả 24 dòng đo đều đạt kỳ vọng, 8/8 bất biến, không hết giới hạn retry. Số liệu chi tiết nằm trong `output/test-results.json`, `output/benchmark/summary.csv`, `results.json`, `requests.csv` và mục 8 báo cáo. Đây là số đo trên máy hiện tại, không là cam kết tốc độ trên máy khác.
 
 Để tạo lại PDF báo cáo sau khi cập nhật Markdown/số liệu, cài `requirements-report.txt` và chạy `scripts/build_report.py` bằng Python trong `.venv`. Việc chạy giao diện, kịch bản nghiệp vụ và kiểm thử chỉ cần `requirements.txt`; giao diện không cần cài Node.js hay gói npm.
 
@@ -110,10 +112,11 @@ Các script SQL theo thứ tự:
 4. `sql/04_queries.sql`: truy vấn nâng cao.
 5. `sql/05_verify.sql`: kiểm chứng dữ liệu.
 6. `sql/06_permissions.sql` nếu có: tách tài khoản ứng dụng khỏi quyền ghi trực tiếp bảng.
+7. `sql/07_nang_cap.sql`: **chỉ dùng cho CSDL đã cài bản cũ** (ví dụ `auction19_demo` trên máy bạn). Chạy lần lượt `07_nang_cap.sql` → `01_schema.sql` → `02_functions.sql` → `06_permissions.sql` bằng tài khoản owner; dữ liệu cũ được giữ nguyên. Nếu chạy bằng `psql` trên Windows, đặt `PGCLIENTENCODING=UTF8` trước (pgAdmin không cần).
 
 ## Quy tắc quan trọng
 
-Lượt đầu từ giá khởi điểm; các lượt sau phải tăng ít nhất một bước và nằm trên lưới giá. Hai yêu cầu cùng mức giá: chỉ yêu cầu được xử lý hợp lệ trước thắng; yêu cầu còn lại phải đọc lại trạng thái rồi bị từ chối. Hạn nhận giá là khoảng `[opens_at, closes_at)`, kiểm tra bằng đồng hồ máy chủ sau khi giành quyền xử lý. UUID của yêu cầu giúp gửi lại không sinh thêm lượt trả giá. Kết quả có khóa chính `auction_id`, nên mỗi phiên có tối đa một dòng kết quả.
+Lượt đầu từ giá khởi điểm; các lượt sau phải tăng ít nhất một bước và nằm trên lưới giá. Hai yêu cầu cùng mức giá: chỉ yêu cầu được xử lý hợp lệ trước thắng; yêu cầu còn lại phải đọc lại trạng thái rồi bị từ chối; `UNIQUE (auction_id, amount)` chặn ở mức CSDL. Một tài sản có thể đấu giá nhiều lần nhưng tối đa một phiên đang mở tại một thời điểm. Hạn nhận giá là khoảng `[opens_at, closes_at)`, kiểm tra bằng đồng hồ máy chủ sau khi giành quyền xử lý. UUID của yêu cầu giúp gửi lại không sinh thêm lượt trả giá. Kết quả có khóa chính `auction_id`, nên mỗi phiên có tối đa một dòng kết quả.
 
 `current_price` là giá cao nhất đã được chấp nhận, **không phải giá khởi điểm**. Khi chưa có lượt trả giá, trường này để `NULL`; giá thắng được suy ra từ lượt trả giá mà kết quả tham chiếu.
 

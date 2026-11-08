@@ -34,7 +34,7 @@ Mở pgAdmin, chạy `SELECT * FROM auction.verify_invariants();`. Giải thích
 
 ### Phút 9-12: so sánh và minh chứng
 
-Mở `output/benchmark/summary.csv` hoặc bảng thực đo trong báo cáo. Giữ cùng workload/seed/worker và đổi thứ tự strategy giữa các round. Khóa dòng có hàng đợi trên phiên; SERIALIZABLE có thể abort rồi retry. Đọc cả accepted, replayed, rejected, retries, exhausted/errors và latency. Không kết luận chiến lược nào luôn nhanh hơn từ ba round cục bộ.
+Mở bảng mục 8.4 báo cáo (hoặc `output/benchmark/summary.csv`). Benchmark đo đúng 4 kịch bản đề bài × 2 giao thức × 3 vòng, cùng danh sách yêu cầu tất định. Ý chính: số nhận/gửi lại/từ chối **giống hệt nhau** giữa hai giao thức (cả hai đều đúng); khác ở cách đạt được — SERIALIZABLE hủy mỗi người thua một lần rồi chạy lại (330 lần thử lại ở kịch bản 1), khóa dòng không thử lại nhưng xếp hàng nên đuôi độ trễ dài hơn. Không kết luận chiến lược nào luôn nhanh hơn từ ba vòng cục bộ.
 
 Mở `output/test-results.json`: các test quan trọng là cùng giá, UUID đồng thời/liên phiên, bid/close race, chờ khóa qua deadline, lỗi sau INSERT và retry transaction thực. Nêu số test thực trong tệp thay vì học thuộc một con số nếu vừa chạy lại phiên bản mới.
 
@@ -96,9 +96,9 @@ Có thể, vì sequence không rollback. ID bị khuyết không chứng minh c�
 
 Vì chèn bảng cha rồi mới chèn bảng con trong cùng transaction. Kiểm tra total ngay sau INSERT cha sẽ từ chối dữ liệu cuối giao dịch vốn hợp lệ. Kiểm tra cuối giao dịch vừa cho phép thứ tự chèn vừa bảo đảm đúng một lớp con.
 
-### Vì sao benchmark hai strategy có số accepted khác nhau?
+### Vì sao kịch bản 1, 2, 4 có số accepted giống hệt nhau giữa hai giao thức, còn kịch bản 3 thì khác?
 
-Cùng payload không có nghĩa cùng lịch xử lý. Một giá cao vào sớm có thể làm nhiều giá thấp bị từ chối. Vì vậy phải báo cả counts và latency; không ép số accepted giống nhau bằng cách chạy tuần tự giả đồng thời.
+Kịch bản 1, 2, 4 được thiết kế theo đợt: trong mỗi đợt mọi người gửi cùng một mức giá (hoặc cùng một UUID), nên kết quả đúng chỉ có một: đúng 1 lượt được nhận mỗi đợt. Giống nhau là bằng chứng cả hai giao thức đều đúng. Kịch bản 3 đếm số yêu cầu xử lý được trong cùng cửa sổ 1 giây trước giờ đóng, nên giao thức nhanh hơn xử lý được nhiều đợt hơn; điều phải giống nhau ở đây là bất biến: đúng 1 kết quả, người thắng là lượt cao nhất, 0 lượt sau hạn.
 
 ### OQL chạy trực tiếp trên PostgreSQL được không?
 

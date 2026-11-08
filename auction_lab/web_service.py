@@ -51,11 +51,11 @@ def precise_connect(dsn):
 
 class ExactMoneyClient(AuctionClient):
     """Retain AuctionClient's transaction path with a connection-local decoder."""
-    def _run(self, operation, strategy):
+    def _run(self, operation, strategy, conn=None):
         def precise_operation(connection):
             set_json_loads(lambda value: json.loads(value, parse_float=Decimal), connection)
             return operation(connection)
-        result = super()._run(precise_operation, strategy)
+        result = super()._run(precise_operation, strategy, conn)
         for key in ('amount', 'minimum', 'winning_price'):
             if result.get(key) is not None:
                 result[key] = format(result[key], 'f') if isinstance(result[key], Decimal) else str(result[key])

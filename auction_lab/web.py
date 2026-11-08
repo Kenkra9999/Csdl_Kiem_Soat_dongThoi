@@ -93,8 +93,10 @@ class AuctionRequestHandler(BaseHTTPRequestHandler):
             raise ApiError('INVALID_BODY', 'Thiếu độ dài dữ liệu JSON.', 411) from None
         if length < 0 or length > MAX_BODY:
             raise ApiError('BODY_TOO_LARGE', 'Dữ liệu yêu cầu vượt giới hạn 32 KB.', 413)
+        raw = self.rfile.read(length)
+        self._body_consumed = True
         try:
-            payload = json.loads(self.rfile.read(length).decode('utf-8'), parse_constant=lambda _: (_ for _ in ()).throw(ValueError()))
+            payload = json.loads(raw.decode('utf-8'), parse_constant=lambda _: (_ for _ in ()).throw(ValueError()))
         except (UnicodeDecodeError, ValueError):
             raise ApiError('INVALID_JSON', 'Dữ liệu JSON không hợp lệ.') from None
         if not isinstance(payload, dict):
@@ -119,7 +121,27 @@ class AuctionRequestHandler(BaseHTTPRequestHandler):
         if not head:
             self.wfile.write(content)
 
+    def _discard_unread_body(self):
+        """Đọc bỏ phần thân chưa đọc (có giới hạn) trước khi đóng kết nối.
+
+        Nếu từ chối sớm (sai token, sai Origin, ...) rồi đóng socket khi thân yêu
+        cầu còn trong bộ đệm, Windows gửi RST và client mất luôn phản hồi lỗi
+        (WinError 10053/10054). Chỉ đọc tối đa 4 x MAX_BODY để không bị lợi dụng.
+        """
+        if self._body_consumed:
+            return
+        try:
+            remaining = min(int(self.headers.get('Content-Length', '0')), 4 * MAX_BODY)
+            while remaining > 0:
+                chunk = self.rfile.read(min(remaining, 8192))
+                if not chunk:
+                    break
+                remaining -= len(chunk)
+        except (ValueError, OSError):
+            pass
+
     def _dispatch(self, *, post=False, head=False):
+        self._body_consumed = False      # một kết nối keep-alive có thể chứa nhiều yêu cầu
         try:
             self._host()
             parsed = urlsplit(self.path)
@@ -163,7 +185,9 @@ class AuctionRequestHandler(BaseHTTPRequestHandler):
                 raise ApiError('NOT_FOUND', 'Không tìm thấy API.', 404)
             self._json({'ok': True, 'data': data}, head=head)
         except ApiError as exc:
-            self.close_connection = post  # Discard unread or oversized body bytes.
+            if post:
+                self._discard_unread_body()
+            self.close_connection = post  # Không tái sử dụng kết nối sau yêu cầu ghi bị từ chối.
             self._error(exc, head=head)
         except psycopg.OperationalError:
             self._error(ApiError('DATABASE_UNAVAILABLE', 'Chưa kết nối được PostgreSQL. Kiểm tra dịch vụ và cấu hình .env trên máy.', 503), head=head)

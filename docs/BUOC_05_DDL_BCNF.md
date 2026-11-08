@@ -101,7 +101,7 @@ MaPhien → MaTaiSan, GiaKhoiDiem, BuocGia,
           ThoiDiemMo, ThoiDiemDong, TrangThai, PhienBan
 ```
 
-Khóa ứng viên là `MaPhien`. `MaTaiSan` không là khóa: sơ đồ cho phép một tài sản có nhiều phiên, với thời gian và cấu hình giá khác nhau. Thông tin mô tả tài sản và thông tin người bán được truy xuất qua khóa ngoại, không lặp vào bảng phiên. Theo tập phụ thuộc này, bảng đạt BCNF.
+Khóa ứng viên là `MaPhien`. `MaTaiSan` không là khóa: sơ đồ cho phép một tài sản có nhiều phiên theo thời gian (ví dụ đấu giá lại), với cấu hình giá khác nhau. Ràng buộc nghiệp vụ "tối đa một phiên **đang mở** cho mỗi tài sản" không phải phụ thuộc hàm nên không ảnh hưởng BCNF; nó được thực thi bằng chỉ mục duy nhất có điều kiện `phien_mot_phien_mo_moi_tai_san ... WHERE "TrangThai" = 'DangMo'` (kiểm tra 24). Thông tin mô tả tài sản và thông tin người bán được truy xuất qua khóa ngoại, không lặp vào bảng phiên. Theo tập phụ thuộc này, bảng đạt BCNF.
 
 `PhienBan` là thuộc tính kỹ thuật phục vụ việc thay đổi trạng thái phiên; nó không xác định duy nhất một phiên và không được coi là khóa.
 
@@ -170,4 +170,4 @@ git push origin main
 
 Kết quả thực thi và mã commit thực tế phải được đối chiếu sau khi chạy; các lệnh ví dụ này không phải bằng chứng rằng cơ sở dữ liệu đã được tạo hoặc mã đã được đẩy lên kho từ xa.
 
-CI của kho mã chạy bốn tệp SQL trên một PostgreSQL 18 riêng của GitHub Actions. Dữ liệu của 23 kiểm tra ràng buộc được hoàn tác. Kết quả cấu trúc và kiểm tra được đính kèm artifact của lần chạy CI; việc này không truy cập PostgreSQL trên máy của bạn.
+CI của kho mã chạy bốn tệp SQL trên một PostgreSQL 18 riêng của GitHub Actions. Dữ liệu của 24 kiểm tra ràng buộc được hoàn tác. Kết quả cấu trúc và kiểm tra được đính kèm artifact của lần chạy CI; việc này không truy cập PostgreSQL trên máy của bạn.

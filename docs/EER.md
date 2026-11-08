@@ -1,5 +1,9 @@
 # Mô hình EER và ánh xạ quan hệ
 
+> **Sơ đồ nộp bài (ký hiệu Chen theo tài liệu SGU):** [eer/EER_DE_TAI_19_DA_SUA.pdf](eer/EER_DE_TAI_19_DA_SUA.pdf) · [PNG](eer/EER_DE_TAI_19_DA_SUA.png) · [draw.io](eer/EER_DE_TAI_19_DA_SUA.drawio).
+> So với bản trước: `GiaHienTai` và `DanDau` vẽ **nét đứt** (dữ liệu suy diễn), `ThuDienTu` và `MaYeuCau` **gạch chân** (khóa ứng viên), ghi rõ chuyên biệt hóa theo `LoaiTaiSan`, thêm ràng buộc "tối đa một phiên đang mở cho mỗi tài sản". Giải thích chi tiết: [ON_TAP_VAN_DAP.md](ON_TAP_VAN_DAP.md) mục 4.
+> Các sơ đồ Mermaid bên dưới dùng tên bảng tiếng Anh của bản cài đặt, để đối chiếu với `sql/01_schema.sql`.
+
 ## 1. Chuyên biệt hóa tài sản
 
 `TaiSan` là lớp cha. Ba lớp con `TacPhamNgheThuat`, `DoSuuTam`, `ThietBiDienTu` có cùng định danh với tài sản cha.

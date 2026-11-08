@@ -16,8 +16,9 @@ import textwrap
 from reportlab.pdfgen import canvas
 from reportlab.platypus import (
     BaseDocTemplate, PageTemplate, Frame, Paragraph, Spacer, PageBreak,
-    NextPageTemplate, Table, TableStyle, Preformatted, KeepTogether,
+    NextPageTemplate, Table, TableStyle, Preformatted, KeepTogether, Image,
 )
+from reportlab.lib.utils import ImageReader
 from reportlab.platypus.tableofcontents import TableOfContents
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib import colors
@@ -224,7 +225,14 @@ def main():
         story.append(Paragraph(text,styles['Normal']))
     story += [Spacer(1,25),Paragraph('Ngày tạo: '+datetime.now(ZoneInfo('Asia/Ho_Chi_Minh')).strftime('%d/%m/%Y %H:%M')+' (Việt Nam)',styles['Small']),PageBreak(),Paragraph('Mục lục',styles['Heading1'])]
     toc=TableOfContents();toc.levelStyles=[ParagraphStyle('Toc1',fontName='Body-Bold',fontSize=9,leading=13,spaceBefore=4),ParagraphStyle('Toc2',fontName='Body',fontSize=8,leading=11,leftIndent=16)]
-    story += [toc,NextPageTemplate('landscape'),PageBreak(),diagram(),Paragraph('Quan hệ bổ sung: USERS 1:N REGISTRATIONS; USERS 1:N BIDS; AUCTIONS 1:N BIDS; AUCTIONS 1:0..1 RESULTS; AUCTIONS 1:N AUDIT_LOG. FK kép của leader và winner bảo đảm lượt trả thuộc đúng phiên. Mỗi tài sản có đúng một lớp con; một người có thể bán ở phiên này và tham gia phiên khác.',styles['Small']),NextPageTemplate('portrait'),PageBreak()]
+    story += [toc,NextPageTemplate('landscape'),PageBreak()]
+    chen = ROOT/'docs/eer/EER_DE_TAI_19_DA_SUA.png'
+    if chen.exists():
+        # Sơ đồ EER ký hiệu Chen (tài liệu SGU), vừa khung trang ngang.
+        img = ImageReader(str(chen)); iw, ih = img.getSize(); scale = min(730/iw, 445/ih)
+        story += [Paragraph('Sơ đồ EER (ký hiệu Chen) - nét đứt là dữ liệu suy diễn', styles['Small']),
+                  Image(str(chen), width=iw*scale, height=ih*scale), PageBreak()]
+    story += [diagram(),Paragraph('Quan hệ bổ sung: USERS 1:N REGISTRATIONS; USERS 1:N BIDS; AUCTIONS 1:N BIDS; AUCTIONS 1:0..1 RESULTS; AUCTIONS 1:N AUDIT_LOG. FK kép của leader và winner bảo đảm lượt trả thuộc đúng phiên. Mỗi tài sản có đúng một lớp con; một người có thể bán ở phiên này và tham gia phiên khác.',styles['Small']),NextPageTemplate('portrait'),PageBreak()]
     report=ROOT/'docs/BAO_CAO.md'
     if not report.exists(): raise RuntimeError('Chưa có docs/BAO_CAO.md')
     story += markdown_blocks(report.read_text(encoding='utf-8'),styles)

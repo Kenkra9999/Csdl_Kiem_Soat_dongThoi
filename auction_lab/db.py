@@ -10,6 +10,7 @@ import os
 import random
 import time
 import uuid
+from contextlib import nullcontext
 from decimal import Decimal
 from pathlib import Path
 from typing import Callable
@@ -84,20 +85,28 @@ class AuctionClient:
         self.max_attempts = max_attempts
         self.base_backoff = base_backoff
 
-    def _run(self, operation: Callable, strategy: str) -> dict:
+    def _run(self, operation: Callable, strategy: str, conn=None) -> dict:
+        """Chạy `operation` trong MỘT giao dịch; thử lại toàn bộ khi 40001/40P01.
+
+        conn=None: mỗi lần thử mở kết nối mới (đơn giản, dùng cho CLI/web).
+        conn=<kết nối autocommit>: dùng lại kết nối đó (benchmark), để độ trễ
+        đo được là thời gian giao dịch chứ không phải thời gian bắt tay TCP/xác thực.
+        """
         if strategy not in STRATEGIES:
             raise ValueError("strategy phải là row_lock hoặc serializable")
         begin = time.perf_counter()
         last_code = None
         for attempt in range(1, self.max_attempts + 1):
             try:
-                with connect(self.dsn, autocommit=True) as conn:
-                    with conn.transaction():
-                        conn.execute("SET TRANSACTION ISOLATION LEVEL " +
-                                     ("SERIALIZABLE" if strategy == "serializable" else "READ COMMITTED"))
-                        conn.execute("SET LOCAL lock_timeout = '15s'")
-                        conn.execute("SET LOCAL statement_timeout = '20s'")
-                        result = operation(conn)
+                with (nullcontext(conn) if conn is not None
+                      else connect(self.dsn, autocommit=True)) as active:
+                    # BEGIN ... COMMIT; lỗi bất kỳ => ROLLBACK toàn bộ.
+                    with active.transaction():
+                        active.execute("SET TRANSACTION ISOLATION LEVEL " +
+                                       ("SERIALIZABLE" if strategy == "serializable" else "READ COMMITTED"))
+                        active.execute("SET LOCAL lock_timeout = '15s'")
+                        active.execute("SET LOCAL statement_timeout = '20s'")
+                        result = operation(active)
                 # Success is counted only after COMMIT returns successfully.
                 result = dict(result)
                 result.update(attempts=attempt, retries=attempt - 1,
@@ -115,19 +124,20 @@ class AuctionClient:
                 "latency_ms": round((time.perf_counter() - begin) * 1000, 3)}
 
     def bid(self, auction_id: int, bidder_id: int, amount,
-            request_id=None, strategy: str = "row_lock") -> dict:
+            request_id=None, strategy: str = "row_lock", conn=None) -> dict:
+        # UUID được tạo MỘT lần, trước vòng thử lại: mọi lần thử dùng cùng UUID.
         request_id = uuid.UUID(str(request_id)) if request_id else uuid.uuid4()
         amount = Decimal(str(amount))
-        result = self._run(lambda conn: conn.execute(
+        result = self._run(lambda c: c.execute(
             "SELECT auction.place_bid(%s::bigint,%s::bigint,%s::numeric,%s::uuid,%s::text) AS result",
-            (auction_id, bidder_id, amount, request_id, strategy)).fetchone()["result"], strategy)
+            (auction_id, bidder_id, amount, request_id, strategy)).fetchone()["result"], strategy, conn)
         result["request_id"] = str(request_id)
         return result
 
-    def close(self, auction_id: int, strategy: str = "row_lock") -> dict:
-        return self._run(lambda conn: conn.execute(
+    def close(self, auction_id: int, strategy: str = "row_lock", conn=None) -> dict:
+        return self._run(lambda c: c.execute(
             "SELECT auction.close_auction(%s::bigint,%s::text) AS result",
-            (auction_id, strategy)).fetchone()["result"], strategy)
+            (auction_id, strategy)).fetchone()["result"], strategy, conn)
 
     def verify(self) -> list[dict]:
         with connect(self.dsn) as conn:
